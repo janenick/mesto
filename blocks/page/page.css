@@ -1,5 +1,5 @@
 .page {
-  background-color: #2a2c2f;
+  background-color: #000000;
   color: #ffffff;
   font-weight: 400;
   margin: 0;
@@ -7,26 +7,72 @@
 
 .page__container {
   min-width: 320px;
-  max-width: 1280px;
+  max-width: 882px;
   width: 100%;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  /* padding: 34px 0 60px;*/
+  padding: 45px 0 60px;
 }
 
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 640px) {
   .page__container {
-    /*padding-top: 36px;*/
+    padding-top: 28px;
+    padding-bottom: 36px;
   }
 }
 
+.page__header {
+  width: 100%;
+}
+
+
 .section {
-  /*max-width: 1280px;*/
+  max-width: calc(100% - 100px*2);
   /*width: 100%;*/
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  /* margin: 0 auto;*/
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 1140px) {
+  .section {
+    max-width: calc(100% - 48px*2); 
+  }
+}
+
+@media screen and (max-width: 984px) {
+  .section {
+    max-width: calc(100% - 24px*2); 
+  }
+}
+@media screen and (max-width: 640px) {
+  .section {
+    max-width: calc(100% - 19px*2); 
+  }
+}
+
+.header {
+  min-height: 74px;
+  border-bottom: 1px solid rgba(84, 84, 84, 0.7); /*#545454=rgb(84, 84, 84)*/
+}
+
+@media screen and (max-width: 640px) {
+.header {
+  min-height: 56px; 
+}
+}
+
+.header__logo {
+  max-width: 142px;
+  max-height: 33px;
+}
+
+@media screen and (max-width: 640px){
+  .header__logo {
+    max-width: 104px;
+    max-height: 25px;
+  }
 }
