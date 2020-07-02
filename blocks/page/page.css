@@ -203,6 +203,10 @@
   opacity: 0.6;
 }
 
+.profile__btn-edit:focus {
+  outline: none;
+}
+
 .profile__btn-add {
   min-width: 150px;
   height: 50px;
@@ -226,3 +230,114 @@
 .profile__btn-add:hover {
   opacity: 0.6;
 }
+
+.profile__btn-add:focus {
+  outline: none;
+}
+/*--> ---------- Секция Popap -------*/
+.popup {
+  font-family: "Inter", Arial, sans-serif;
+  display: none;
+  width: 100%;
+  min-height: 100%;
+  margin: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  right: 0;
+  /*transition: visibility 0.7s linear, opacity 0.3s linear;*/
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.popup_opened {
+  display: flex;
+}
+
+.popup__form {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.popup__btn-close {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  top: -40px;
+  right: -40px;
+  user-select: none;
+  background: #000000;
+  background: url(../../images/popup/close-icon.svg) center no-repeat;
+  border: 0;
+  cursor: pointer;
+}
+
+.popup__btn-close:hover {
+  opacity: 0.6;
+}
+
+.popup__btn-close:focus {
+  outline: none;
+}
+
+.popup__container {
+  display: flex;
+  flex-direction: column;
+  padding: 34px 36px 36px;
+  background: #ffffff;
+  color: #000000;
+  width: 430px;
+  height: 330px;
+  position: relative;
+  box-sizing: border-box;
+  /*top: 50%;*/
+  /*left: 50%;*/
+  /*transform: translate(-50%, -50%);*/
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  justify-content: space-around;
+}
+
+.popup__title {
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.popup__input {
+  font-size: 14px;
+  line-height: 1.2;
+  }
+
+.popup__input_type_name {
+  margin: 54px 0 0;
+  border-width: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);}
+
+.popup__input_type_status {
+  margin: 30px 0 0;
+  border-width: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);}
+
+.popup__btn-save {
+  background-color: #000000;
+  color: #ffffff;
+  height: 50px;
+  font-size: 18px;
+  line-height: 1.2;
+  margin-top: 48px;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.popup__btn-save:hover {
+  opacity: 0.8;
+}
+
+.popup__btn-save:focus {
+  outline: none;
+}
+/*<-- ---------- Секция Popap -------*/
