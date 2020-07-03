@@ -1,0 +1,12 @@
+@import url("../../images/header/header-logo.svg");
+
+.header {
+  min-height: 74px;
+  border-bottom: 1px solid rgba(84, 84, 84, 0.7); /*#545454=rgb(84, 84, 84)*/
+}
+
+@media screen and (max-width: 640px) {
+  .header {
+    min-height: 56px;
+  }
+}
