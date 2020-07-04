@@ -7,29 +7,28 @@ const profileName = profileInfo.querySelector(".profile__name");
 const profileStatus = profileInfo.querySelector(".profile__status");
 
 const popupProfileInfo = document.querySelector(".popup_profile");
-const popupformElement = popupProfileInfo.querySelector(".popup__container");
+const popupFormElement = popupProfileInfo.querySelector(".popup__container");
 const saveButton = popupProfileInfo.querySelector(".popup__btn-save");
 const closeButton = popupProfileInfo.querySelector(".popup__btn-close");
 const popupName = popupProfileInfo.querySelector(".popup__input_type_name");
 const popupStatus = popupProfileInfo.querySelector(".popup__input_type_status");
 
+function togglePopup () {
+/*const togglePopup = () => {*/
+  let popupOpened = popupSection.classList.contains("popup_opened");
+  if (!popupOpened) {
+    popupName.value = profileName.textContent;
+    popupStatus.value = profileStatus.textContent;
+  }
+  popupSection.classList.toggle("popup_opened");
+};
+
 const editProfile = () => {
+ 
   popupName.value = profileName.textContent;
   popupStatus.value = profileStatus.textContent;
 
-  togglePopup(popupSection);
-};
-
-editButton.addEventListener("click", editProfile);
-
-const closePopup = () => {
-  togglePopup(popupSection);
-};
-
-closeButton.addEventListener("click", closePopup);
-
-const togglePopup = (localPopup) => {
-  localPopup.classList.toggle("popup_opened");
+  togglePopup();
 };
 
 const saveProfile = (event) => {
@@ -37,7 +36,10 @@ const saveProfile = (event) => {
   profileName.textContent = popupName.value;
   profileStatus.textContent = popupStatus.value;
 
-  togglePopup(popupSection);
+  togglePopup();
 };
 
-popupformElement.addEventListener("submit", saveProfile);
+popupFormElement.addEventListener("submit", saveProfile);
+
+editButton.addEventListener("click", togglePopup);
+closeButton.addEventListener("click", togglePopup);
