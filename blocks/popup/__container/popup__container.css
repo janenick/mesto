@@ -7,9 +7,6 @@
   width: 430px;
   position: relative;
   box-sizing: border-box;
-  /*top: 50%;*/
-  /*left: 50%;*/
-  /*transform: translate(-50%, -50%);*/
   box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
   border-radius: 10px;
   justify-content: space-around;

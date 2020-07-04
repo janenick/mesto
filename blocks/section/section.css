@@ -9,7 +9,6 @@
 
 @media screen and (max-width: 1024px) {
   .section {
-    /*max-width: calc(100% - 24px * 2);*/
     max-width: 582px;
   }
 }
@@ -22,7 +21,6 @@
 
 @media screen and (max-width: 425px) {
   .section {
-    /*max-width: calc(100% - 19px * 2);*/
     padding-right: 19px;
     padding-left: 19px;
   }
