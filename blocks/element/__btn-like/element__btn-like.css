@@ -7,6 +7,10 @@
   border: 0;
 }
 
+.element__btn-like:hover {
+  opacity: 0.8;
+}
+
 .element__btn-like:focus {
   outline: none;
 }

@@ -23,11 +23,3 @@
     align-items: stretch;
   }
 }
-
-/*@media screen and (max-width: 720px) {
-  .profile {
-    margin-top: 42px;
-    flex-direction: column;
-    align-items: stretch;
-  }
-}*/

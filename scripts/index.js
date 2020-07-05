@@ -14,21 +14,14 @@ const popupName = popupProfileInfo.querySelector(".popup__input_type_name");
 const popupStatus = popupProfileInfo.querySelector(".popup__input_type_status");
 
 function togglePopup() {
-  /*const togglePopup = () => {*/
+/*const togglePopup = () => {*/
+  popupSection.classList.toggle("popup_opened");
   let popupOpened = popupSection.classList.contains("popup_opened");
-  if (!popupOpened) {
+    if (popupOpened) {
     popupName.value = profileName.textContent;
     popupStatus.value = profileStatus.textContent;
   }
-  popupSection.classList.toggle("popup_opened");
-}
-
-const editProfile = () => {
-  popupName.value = profileName.textContent;
-  popupStatus.value = profileStatus.textContent;
-
-  togglePopup();
-};
+ }
 
 const saveProfile = (event) => {
   event.preventDefault();

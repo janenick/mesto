@@ -1,12 +1,18 @@
 @import url("../../images/header/header-logo.svg");
 
 .header {
-  min-height: 74px;
+  /*min-height: 74px;*/
+
+  /*Прошу прощения, но можно пояснить почему не устраивает min-height?
+  На вебинаре "Покодим вместе" Саша Палтух как раз предлагал делать min-height, а не отступы*/
+
+  padding-bottom: 40px;
   border-bottom: 1px solid rgba(84, 84, 84, 0.7); /*#545454=rgb(84, 84, 84)*/
 }
 
 @media screen and (max-width: 640px) {
   .header {
-    min-height: 56px;
+    /*min-height: 56px;*/
+    padding-bottom: 30px;
   }
 }
