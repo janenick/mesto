@@ -9,6 +9,13 @@
   cursor: pointer;
 }
 
+@media screen and (max-width: 640px) {
+  .popup__btn-save {
+    font-size: 14px;
+     margin-top: 36px;
+  }
+}
+
 .popup__btn-save:hover {
   opacity: 0.8;
 }
