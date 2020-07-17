@@ -1,4 +1,4 @@
-@import url("../../images/header/header-logo.svg");
+@import url("./__logo/header__logo.css");
 
 .header {
   /*min-height: 74px;*/
