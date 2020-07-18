@@ -102,29 +102,7 @@ const showImage = (event) => {
   captionBigImg.textContent = cardItem.querySelector(".element__title").textContent;
 };
 
-const addCard_old = (cardName, cardLink) => {
-  const newCardElement = newCardTemplate.cloneNode(true);
-  // наполняем содержимым
-  newCardElement.querySelector(".element__title").textContent = cardName;
-  const cardImg = newCardElement.querySelector(".element__img");
-  cardImg.src = cardLink;
-  cardImg.alt = cardName;
-
-  cardImg.onclick = () => showImage(event);
-
-  //поставим сердечку обработчик клика, при котором в консоль выводится объект evt:
-  const newCardLikeButton = newCardElement.querySelector(".element__btn-like");
-  newCardLikeButton.addEventListener("click", () => changeLike(event));
-
-  // добавим "корзину"
-  const newCardDelButton = newCardElement.querySelector(".element__btn-trash");
-  newCardDelButton.addEventListener("click", () => deleteCard(event));
-
-  // отображаем на странице
-  elementsSection.prepend(newCardElement);
-};
-
-const addCard = (card) => {
+const createCard = (card) => {
   const newCardElement = newCardTemplate.cloneNode(true);
   // наполняем содержимым
   newCardElement.querySelector(".element__title").textContent = card.name;
@@ -145,6 +123,10 @@ const addCard = (card) => {
   return newCardElement;
 };
 
+const addCard = (card) => {
+  elementsSection.prepend(card);
+}
+
 const openPopupNewPlace = () => {
   togglePopup(popupNewPlace);
 };
@@ -154,9 +136,9 @@ const saveNewPlace = (event) => {
   const newCardData = {
     name: popupNameNewPlace.value,
     link: popupImgNewPlace.value,
-  }; 
+  };
 
-  elementsSection.prepend(addCard(newCardData));
+  addCard(createCard(newCardData));
   popupNameNewPlace.value = "";
   popupImgNewPlace.value = "";
   togglePopup(popupNewPlace);
@@ -165,7 +147,7 @@ const saveNewPlace = (event) => {
 const addCards = (arrCards) => {
   arrCards.forEach((card) => {
     // отображаем на странице
-    elementsSection.prepend(addCard(card));
+    addCard(createCard(card));
   });
 };
 
