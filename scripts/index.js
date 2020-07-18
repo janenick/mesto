@@ -1,5 +1,3 @@
-const popupSection = document.querySelector(".popup");
-
 const profileInfo = document.querySelector(".profile__info");
 const editButton = profileInfo.querySelector(".profile__btn-edit");
 const addButton = document.querySelector(".profile__btn-add");
@@ -15,7 +13,6 @@ const popupStatus = popupProfileInfo.querySelector(".popup__input_type_status");
 
 const popupNewPlace = document.querySelector(".popup_type_new-place");
 const popupFormElementNewPlace = popupNewPlace.querySelector(".popup__container");
-const saveButtonNewPlace = popupNewPlace.querySelector(".popup__btn-save");
 const closeButtonNewPlace = popupNewPlace.querySelector(".popup__btn-close");
 const popupNameNewPlace = popupNewPlace.querySelector(".popup__input_type_new-place-name");
 const popupImgNewPlace = popupNewPlace.querySelector(".popup__input_type_new-place-img");
@@ -27,9 +24,6 @@ const captionBigImg = popupBigImg.querySelector(".popup__caption");
 
 const elementsSection = document.querySelector(".elements");
 const newCardTemplate = document.querySelector("#element-template").content;
-
-const likeButton = document.querySelector(".element__btn-like");
-const trashButton = document.querySelector(".element__btn-trash");
 
 const initialCards = [
   {
@@ -92,15 +86,12 @@ const changeLike = (event) => {
 };
 
 const deleteCard = (event) => {
-  console.log("удаляем карточку места");
-
   const eventTarget = event.target;
   const cardItem = eventTarget.closest(".element");
   cardItem.remove();
 };
 
 const showImage = (event) => {
-  console.log("Вы нажали на картинку");
   togglePopup(popupBigImg);
   const eventTarget = event.target;
   const cardItem = eventTarget.closest(".element");
@@ -111,7 +102,7 @@ const showImage = (event) => {
   captionBigImg.textContent = cardItem.querySelector(".element__title").textContent;
 };
 
-const addCard = (cardName, cardLink) => {
+const addCard_old = (cardName, cardLink) => {
   const newCardElement = newCardTemplate.cloneNode(true);
   // наполняем содержимым
   newCardElement.querySelector(".element__title").textContent = cardName;
@@ -133,21 +124,48 @@ const addCard = (cardName, cardLink) => {
   elementsSection.prepend(newCardElement);
 };
 
+const addCard = (card) => {
+  const newCardElement = newCardTemplate.cloneNode(true);
+  // наполняем содержимым
+  newCardElement.querySelector(".element__title").textContent = card.name;
+  const cardImg = newCardElement.querySelector(".element__img");
+  cardImg.src = card.link;
+  cardImg.alt = card.name;
+
+  cardImg.onclick = () => showImage(event);
+
+  //поставим сердечку обработчик клика, при котором в консоль выводится объект evt:
+  const newCardLikeButton = newCardElement.querySelector(".element__btn-like");
+  newCardLikeButton.addEventListener("click", () => changeLike(event));
+
+  // добавим "корзину"
+  const newCardDelButton = newCardElement.querySelector(".element__btn-trash");
+  newCardDelButton.addEventListener("click", () => deleteCard(event));
+
+  return newCardElement;
+};
+
 const openPopupNewPlace = () => {
   togglePopup(popupNewPlace);
 };
 
 const saveNewPlace = (event) => {
   event.preventDefault();
-  addCard(popupNameNewPlace.value, popupImgNewPlace.value);
-  popupNameNewPlace.value = "Название";
-  popupImgNewPlace.value = "Ссылка на картинку";
+  const newCardData = {
+    name: popupNameNewPlace.value,
+    link: popupImgNewPlace.value,
+  }; 
+
+  elementsSection.prepend(addCard(newCardData));
+  popupNameNewPlace.value = "";
+  popupImgNewPlace.value = "";
   togglePopup(popupNewPlace);
 };
 
 const addCards = (arrCards) => {
   arrCards.forEach((card) => {
-    addCard(card.name, card.link);
+    // отображаем на странице
+    elementsSection.prepend(addCard(card));
   });
 };
 
@@ -158,9 +176,6 @@ closeButton.addEventListener("click", () => togglePopup(popupProfileInfo));
 addButton.addEventListener("click", openPopupNewPlace);
 popupFormElementNewPlace.addEventListener("submit", saveNewPlace);
 closeButtonNewPlace.addEventListener("click", () => togglePopup(popupNewPlace));
-
-//likeButton.addEventListener("click", changeLike);
-//trashButton.addEventListener("click", deleteCard);
 
 closeButtonBigImg.addEventListener("click", () => togglePopup(popupBigImg));
 
