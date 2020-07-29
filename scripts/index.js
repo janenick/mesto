@@ -1,3 +1,5 @@
+const allPopups = Array.from(document.querySelectorAll('.popup'));
+
 const profileInfo = document.querySelector(".profile__info");
 const editButton = profileInfo.querySelector(".profile__btn-edit");
 const addButton = document.querySelector(".profile__btn-add");
@@ -5,6 +7,7 @@ const profileName = profileInfo.querySelector(".profile__name");
 const profileStatus = profileInfo.querySelector(".profile__status");
 
 const popupProfileInfo = document.querySelector(".popup_type_profile");
+const popupProfileForm = popupProfileInfo.querySelector(".popup__form");
 const popupFormElement = popupProfileInfo.querySelector(".popup__container");
 const saveButton = popupProfileInfo.querySelector(".popup__btn-save");
 const closeButton = popupProfileInfo.querySelector(".popup__btn-close");
@@ -58,15 +61,36 @@ const initialCards = [
   },
 ];
 
+const isPopupOpened = (currentPopup) => {
+  return currentPopup.classList.contains("popup_opened");
+};
+
+const addHandlerOnEscape = () => {
+  document.addEventListener('keydown', closePopupOnEscapeHandler);
+};
+
+const removeHandlerOnEscape = () => {
+  document.removeEventListener('keydown', closePopupOnEscapeHandler);
+};
+
 function togglePopup(currentPopup) {
-  /*const togglePopup = () => {*/
+
   currentPopup.classList.toggle("popup_opened");
-}
+  if (isPopupOpened(currentPopup)) {
+    addHandlerOnEscape();
+  }
+  else {
+    removeHandlerOnEscape();
+  }
+};
 
 const editPopupProfile = () => {
   togglePopup(popupProfileInfo);
   popupName.value = profileName.textContent;
   popupStatus.value = profileStatus.textContent;
+
+  toggleButtonStateOnForm(popupProfileForm, saveButton);
+
 };
 
 const saveProfile = (event) => {
@@ -139,8 +163,9 @@ const saveNewPlace = (event) => {
   };
 
   addCard(createCard(newCardData));
-  popupNameNewPlace.value = "";
-  popupImgNewPlace.value = "";
+  /* popupNameNewPlace.value = "";
+   popupImgNewPlace.value = "";*/
+  resetPopupForm(popupNewPlace);
   togglePopup(popupNewPlace);
 };
 
@@ -151,14 +176,40 @@ const addCards = (arrCards) => {
   });
 };
 
+const closePopupOnEscapeHandler = (evt) => {
+  //console.log(`нажали клавишу: ${evt.key}`);
+  if (evt.key === "Escape") {
+    const popupElement = allPopups.find(function (popupItem) {
+      return isPopupOpened(popupItem);
+    });
+    if (popupElement != undefined) {
+      togglePopup(popupElement);
+    };
+  };
+};
+
+const togglePopupWithClick = (evt, currentPopup) => {
+  evtTarget = evt.target;
+  if (evtTarget.classList.contains("popup_opened")) {
+    resetPopupForm(currentPopup);
+    togglePopup(currentPopup);
+  }
+};
+
+
 editButton.addEventListener("click", editPopupProfile);
 popupFormElement.addEventListener("submit", saveProfile);
 closeButton.addEventListener("click", () => togglePopup(popupProfileInfo));
+
+popupProfileInfo.addEventListener("mouseup", (evt) => togglePopupWithClick(evt, popupProfileInfo));
+popupNewPlace.addEventListener("mouseup", (evt) => togglePopupWithClick(evt, popupNewPlace));
+popupBigImg.addEventListener("mouseup", (evt) => togglePopupWithClick(evt, popupBigImg));
 
 addButton.addEventListener("click", openPopupNewPlace);
 popupFormElementNewPlace.addEventListener("submit", saveNewPlace);
 closeButtonNewPlace.addEventListener("click", () => togglePopup(popupNewPlace));
 
 closeButtonBigImg.addEventListener("click", () => togglePopup(popupBigImg));
+
 
 addCards(initialCards);

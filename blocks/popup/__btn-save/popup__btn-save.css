@@ -4,7 +4,8 @@
   height: 50px;
   font-size: 18px;
   line-height: 1.2;
-  margin-top: 48px;
+  /*margin-top: 48px;*/
+  margin-top: 20px;
   border-radius: 2px;
   cursor: pointer;
 }
@@ -22,3 +23,4 @@
 
 .popup__btn-save:focus {
   outline: none;
+}
