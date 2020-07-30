@@ -31,15 +31,15 @@ const newCardTemplate = document.querySelector("#element-template").content;
 
 const isPopupOpened = (currentPopup) => {
   return currentPopup.classList.contains("popup_opened");
-};
+}
 
 const addHandlerOnEscape = () => {
   document.addEventListener('keydown', closePopupOnEscapeHandler);
-};
+}
 
 const removeHandlerOnEscape = () => {
   document.removeEventListener('keydown', closePopupOnEscapeHandler);
-};
+}
 
 function togglePopup(currentPopup) {
 
@@ -53,7 +53,7 @@ function togglePopup(currentPopup) {
     // очистим поля заполнения
     resetPopupForm(currentPopup);
   }
-};
+}
 
 const editPopupProfile = () => {
   togglePopup(popupProfileInfo);
@@ -63,7 +63,7 @@ const editPopupProfile = () => {
   // при открытии попапа установим доступность кнопки Сохранить
   toggleButtonStateOnForm(popupProfileForm, saveButton);
 
-};
+}
 
 const saveProfile = (event) => {
   event.preventDefault();
@@ -71,7 +71,7 @@ const saveProfile = (event) => {
   profileStatus.textContent = popupStatus.value;
 
   togglePopup(popupProfileInfo);
-};
+}
 
 const changeLike = (event) => {
   // в переменной eventTarget окажется элемент
@@ -79,13 +79,13 @@ const changeLike = (event) => {
 
   const eventTarget = event.target;
   eventTarget.classList.toggle("element__btn-like_active");
-};
+}
 
 const deleteCard = (event) => {
   const eventTarget = event.target;
   const cardItem = eventTarget.closest(".element");
   cardItem.remove();
-};
+}
 
 const showImage = (event) => {
   togglePopup(popupBigImg);
@@ -96,7 +96,7 @@ const showImage = (event) => {
 
   cardBigImg.src = cardImg.src;
   captionBigImg.textContent = cardItem.querySelector(".element__title").textContent;
-};
+}
 
 const createCard = (card) => {
   const newCardElement = newCardTemplate.cloneNode(true);
@@ -117,7 +117,7 @@ const createCard = (card) => {
   newCardDelButton.addEventListener("click", deleteCard);
 
   return newCardElement;
-};
+}
 
 const addCard = (card) => {
   elementsSection.prepend(card);
@@ -129,7 +129,7 @@ const openPopupNewPlace = () => {
   // при открытии попапа установим доступность кнопки Сохранить
   toggleButtonStateOnForm(popupNewPlace, saveButtonNewPlace);
 
-};
+}
 
 const saveNewPlace = (event) => {
   event.preventDefault();
@@ -140,14 +140,14 @@ const saveNewPlace = (event) => {
 
   addCard(createCard(newCardData));
   togglePopup(popupNewPlace);
-};
+}
 
 const addCards = (arrCards) => {
   arrCards.forEach((card) => {
     // отображаем на странице
     addCard(createCard(card));
   });
-};
+}
 
 const closePopupOnEscapeHandler = (evt) => {
   
@@ -157,9 +157,9 @@ const closePopupOnEscapeHandler = (evt) => {
     });
     if (popupElement != undefined) {
       togglePopup(popupElement);
-    };
-  };
-};
+    }
+  }
+}
 
 const togglePopupWithClick = (evt, currentPopup) => {
   const evtTarget = evt.target;
@@ -167,7 +167,7 @@ const togglePopupWithClick = (evt, currentPopup) => {
 
     togglePopup(currentPopup);
   }
-};
+}
 
 
 editButton.addEventListener("click", editPopupProfile);
