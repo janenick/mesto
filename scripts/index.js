@@ -28,39 +28,6 @@ const captionBigImg = popupBigImg.querySelector(".popup__caption");
 const elementsSection = document.querySelector(".elements");
 const newCardTemplate = document.querySelector("#element-template").content;
 
-const initialCards = [
-  {
-    name: "Архыз",
-    link:
-      "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
-  },
-  {
-    name: "Челябинская область",
-    link:
-      "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
-  },
-  {
-    name: "Иваново",
-    link:
-      "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
-  },
-  {
-    name: "Камчатка",
-    link:
-      "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
-  },
-  {
-    name: "Холмогорский район",
-    link:
-      "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
-  },
-  {
-    name: "Байкал",
-    link:
-      "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-  },
-];
-
 const isPopupOpened = (currentPopup) => {
   return currentPopup.classList.contains("popup_opened");
 };
@@ -134,15 +101,15 @@ const createCard = (card) => {
   cardImg.src = card.link;
   cardImg.alt = card.name;
 
-  cardImg.onclick = () => showImage(event);
+  cardImg.addEventListener("click", showImage);
 
   //поставим сердечку обработчик клика, при котором в консоль выводится объект evt:
   const newCardLikeButton = newCardElement.querySelector(".element__btn-like");
-  newCardLikeButton.addEventListener("click", (event) => changeLike(event));
+  newCardLikeButton.addEventListener("click", changeLike);
 
   // добавим "корзину"
   const newCardDelButton = newCardElement.querySelector(".element__btn-trash");
-  newCardDelButton.addEventListener("click", () => deleteCard(event));
+  newCardDelButton.addEventListener("click", deleteCard);
 
   return newCardElement;
 };
@@ -187,7 +154,7 @@ const closePopupOnEscapeHandler = (evt) => {
 };
 
 const togglePopupWithClick = (evt, currentPopup) => {
-  evtTarget = evt.target;
+  const evtTarget = evt.target;
   if (evtTarget.classList.contains("popup_opened")) {
     resetPopupForm(currentPopup);
     togglePopup(currentPopup);
