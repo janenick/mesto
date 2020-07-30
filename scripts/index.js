@@ -150,7 +150,7 @@ const addCards = (arrCards) => {
 };
 
 const closePopupOnEscapeHandler = (evt) => {
-  //console.log(`нажали клавишу: ${evt.key}`);
+  
   if (evt.key === "Escape") {
     const popupElement = allPopups.find(function (popupItem) {
       return isPopupOpened(popupItem);
