@@ -16,6 +16,7 @@ const popupStatus = popupProfileInfo.querySelector(".popup__input_type_status");
 
 const popupNewPlace = document.querySelector(".popup_type_new-place");
 const popupFormElementNewPlace = popupNewPlace.querySelector(".popup__container");
+const saveButtonNewPlace = popupNewPlace.querySelector(".popup__btn-save");
 const closeButtonNewPlace = popupNewPlace.querySelector(".popup__btn-close");
 const popupNameNewPlace = popupNewPlace.querySelector(".popup__input_type_new-place-name");
 const popupImgNewPlace = popupNewPlace.querySelector(".popup__input_type_new-place-img");
@@ -56,6 +57,7 @@ const editPopupProfile = () => {
   popupName.value = profileName.textContent;
   popupStatus.value = profileStatus.textContent;
 
+  // при открытии попапа установим доступность кнопки Сохранить
   toggleButtonStateOnForm(popupProfileForm, saveButton);
 
 };
@@ -120,6 +122,10 @@ const addCard = (card) => {
 
 const openPopupNewPlace = () => {
   togglePopup(popupNewPlace);
+
+  // при открытии попапа установим доступность кнопки Сохранить
+  toggleButtonStateOnForm(popupNewPlace, saveButtonNewPlace);
+
 };
 
 const saveNewPlace = (event) => {

@@ -66,7 +66,8 @@ const resetPopupForm = (currentPopup) => {
   const popupForm = currentPopup.querySelector(validationParams.formSelector);
   if (popupForm != null) {
     popupForm.reset();
-  }
+   
+     }
 }
 
 const setEventListeners = (formElement, validParams) => {
