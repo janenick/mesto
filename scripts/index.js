@@ -49,6 +49,9 @@ function togglePopup(currentPopup) {
   }
   else {
     removeHandlerOnEscape();
+
+    // очистим поля заполнения
+    resetPopupForm(currentPopup);
   }
 };
 
@@ -136,7 +139,6 @@ const saveNewPlace = (event) => {
   };
 
   addCard(createCard(newCardData));
-  resetPopupForm(popupNewPlace);
   togglePopup(popupNewPlace);
 };
 
@@ -162,7 +164,7 @@ const closePopupOnEscapeHandler = (evt) => {
 const togglePopupWithClick = (evt, currentPopup) => {
   const evtTarget = evt.target;
   if (evtTarget.classList.contains("popup_opened")) {
-    resetPopupForm(currentPopup);
+
     togglePopup(currentPopup);
   }
 };

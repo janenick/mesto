@@ -66,9 +66,18 @@ const resetPopupForm = (currentPopup) => {
   const popupForm = currentPopup.querySelector(validationParams.formSelector);
   if (popupForm != null) {
     popupForm.reset();
-   
-     }
+    resetValidationErrors(popupForm);
+
+  }
 }
+
+const resetValidationErrors = (formElement) => {
+
+  const inputList = Array.from(formElement.querySelectorAll(validationParams.inputSelector));
+  inputList.forEach((inputElement) => {
+    hideInputError(formElement, inputElement, validationParams.inputErrorClass, validationParams.errorClass)
+  });
+};
 
 const setEventListeners = (formElement, validParams) => {
   const inputList = Array.from(formElement.querySelectorAll(validParams.inputSelector));
