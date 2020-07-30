@@ -9,8 +9,7 @@ width: 18px;
   right: 19px;
   top: 18px;
   border: 0;
-  //border: 1px solid red;
-}
+  }
 
 .element__btn-trash:hover {
   opacity: .6;

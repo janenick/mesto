@@ -138,7 +138,7 @@ const createCard = (card) => {
 
   //поставим сердечку обработчик клика, при котором в консоль выводится объект evt:
   const newCardLikeButton = newCardElement.querySelector(".element__btn-like");
-  newCardLikeButton.addEventListener("click", () => changeLike(event));
+  newCardLikeButton.addEventListener("click", (event) => changeLike(event));
 
   // добавим "корзину"
   const newCardDelButton = newCardElement.querySelector(".element__btn-trash");
@@ -163,8 +163,6 @@ const saveNewPlace = (event) => {
   };
 
   addCard(createCard(newCardData));
-  /* popupNameNewPlace.value = "";
-   popupImgNewPlace.value = "";*/
   resetPopupForm(popupNewPlace);
   togglePopup(popupNewPlace);
 };
