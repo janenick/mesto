@@ -74,8 +74,11 @@ const resetPopupForm = (currentPopup) => {
 const resetValidationErrors = (formElement) => {
 
   const inputList = Array.from(formElement.querySelectorAll(validationParams.inputSelector));
+  const buttonElement = formElement.querySelector(validationParams.submitButtonSelector);
+
   inputList.forEach((inputElement) => {
-    hideInputError(formElement, inputElement, validationParams.inputErrorClass, validationParams.errorClass)
+    hideInputError(formElement, inputElement, validationParams.inputErrorClass, validationParams.errorClass);
+    toggleButtonState(inputList, buttonElement, validationParams.inactiveButtonClass);
   });
 };
 
