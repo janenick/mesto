@@ -1,4 +1,4 @@
-const openPopup = (currentPopup) => {
+/*const openPopup = (currentPopup) => {
 
   currentPopup.classList.add("popup_opened");
   //добавим обработчик закрытия попапа по клавише Escape
@@ -22,3 +22,4 @@ export { openPopup, closePopup };
   
 import { resetPopupForm } from './validate.js';
 import { addHandlerOnEscape, removeHandlerOnEscape } from './index.js';
+*/

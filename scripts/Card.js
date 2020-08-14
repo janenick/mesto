@@ -1,4 +1,11 @@
-class Card {
+import { showImage } from './index.js';
+/*import { openPopup, closePopup } from './utils.js';
+import { popupProfileInfo, popupNewPlace, popupBigImg } from './constants.js'; // попапы
+import { closeButton, closeButtonNewPlace, closeButtonBigImg } from './constants.js'; // кнопки закрытия попапов
+import { cardBigImg, captionBigImg } from './constants.js'; // элементы попапа с всплывающей большой картинкой (popupBigImg)
+*/
+
+export class Card {
   constructor(data, cardSelector) {
     this._cardSelector = cardSelector;
     this.name = data.name;
@@ -14,7 +21,7 @@ class Card {
 
   _setEventListeners() {
     //поставим обработчик "всплывающей картинки"
-    this._element.querySelector('.element__img').addEventListener('click', this._handleShowBigImage);
+    this._element.querySelector('.element__img').addEventListener('click', showImage);
 
     //поставим сердечку обработчик клика
     this._element.querySelector('.element__btn-like').addEventListener('click', this._handleСhangeLike);
@@ -23,11 +30,11 @@ class Card {
     this._element.querySelector('.element__btn-trash').addEventListener('click', this._handleDeleteCard);
 
     // обработчик закрытия попапа "всплывающей картинки"
-    closeButtonBigImg.addEventListener('click', this._handleCloseBigImage);
+    //closeButtonBigImg.addEventListener('click', this._handleCloseBigImage);
 
   }
 
-  _handleShowBigImage = () => {
+ /* _handleShowBigImage = () => {
 
     cardBigImg.src = this.link;
     captionBigImg.textContent = this.name;
@@ -37,7 +44,7 @@ class Card {
   _handleCloseBigImage() {
     closePopup(popupBigImg);
   }
-
+*/
   _handleСhangeLike = (event) => {
     // в переменной eventTarget окажется элемент
     // button, на который мы кликнули
@@ -72,9 +79,3 @@ class Card {
   }
 
 }
-
-export { Card };
-import { openPopup, closePopup } from './utils.js';
-import { popupProfileInfo, popupNewPlace, popupBigImg } from './constants.js'; // попапы
-import { closeButton, closeButtonNewPlace, closeButtonBigImg } from './constants.js'; // кнопки закрытия попапов
-import { cardBigImg, captionBigImg } from './constants.js'; // элементы попапа с всплывающей большой картинкой (popupBigImg)
