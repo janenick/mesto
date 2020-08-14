@@ -108,3 +108,5 @@ const enableValidation = (validParams) => {
 };
 
 enableValidation(validationParams);
+
+export { resetPopupForm, toggleButtonStateOnForm };

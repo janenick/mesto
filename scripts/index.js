@@ -6,39 +6,31 @@ const addButton = document.querySelector(".profile__btn-add");
 const profileName = profileInfo.querySelector(".profile__name");
 const profileStatus = profileInfo.querySelector(".profile__status");
 
-const popupProfileInfo = document.querySelector(".popup_type_profile");
+//const popupProfileInfo = document.querySelector(".popup_type_profile");
 const popupProfileForm = popupProfileInfo.querySelector(".popup__form");
 const popupFormElement = popupProfileInfo.querySelector(".popup__container");
 const saveButton = popupProfileInfo.querySelector(".popup__btn-save");
-const closeButton = popupProfileInfo.querySelector(".popup__btn-close");
+//const closeButton = popupProfileInfo.querySelector(".popup__btn-close");
 const popupName = popupProfileInfo.querySelector(".popup__input_type_name");
 const popupStatus = popupProfileInfo.querySelector(".popup__input_type_status");
 
-const popupNewPlace = document.querySelector(".popup_type_new-place");
+//const popupNewPlace = document.querySelector(".popup_type_new-place");
 const popupFormElementNewPlace = popupNewPlace.querySelector(".popup__container");
 const saveButtonNewPlace = popupNewPlace.querySelector(".popup__btn-save");
-const closeButtonNewPlace = popupNewPlace.querySelector(".popup__btn-close");
+//const closeButtonNewPlace = popupNewPlace.querySelector(".popup__btn-close");
 const popupNameNewPlace = popupNewPlace.querySelector(".popup__input_type_new-place-name");
 const popupImgNewPlace = popupNewPlace.querySelector(".popup__input_type_new-place-img");
 
-const popupBigImg = document.querySelector(".popup_type_img");
-const closeButtonBigImg = popupBigImg.querySelector(".popup__btn-close");
-const cardBigImg = popupBigImg.querySelector(".popup__img");
-const captionBigImg = popupBigImg.querySelector(".popup__caption");
+//const popupBigImg = document.querySelector(".popup_type_img");
+//const closeButtonBigImg = popupBigImg.querySelector(".popup__btn-close");
+//const cardBigImg = popupBigImg.querySelector(".popup__img");
+//const captionBigImg = popupBigImg.querySelector(".popup__caption");
 
 const elementsSection = document.querySelector(".elements");
 const newCardTemplate = document.querySelector("#element-template").content;
 
 const isPopupOpened = (currentPopup) => {
   return currentPopup.classList.contains("popup_opened");
-}
-
-const addHandlerOnEscape = () => {
-  document.addEventListener('keydown', closePopupOnEscapeHandler);
-}
-
-const removeHandlerOnEscape = () => {
-  document.removeEventListener('keydown', closePopupOnEscapeHandler);
 }
 
 function togglePopup(currentPopup) {
@@ -54,6 +46,7 @@ function togglePopup(currentPopup) {
     resetPopupForm(currentPopup);
   }
 }
+
 
 const editPopupProfile = () => {
   togglePopup(popupProfileInfo);
@@ -123,6 +116,17 @@ const addCard = (card) => {
   elementsSection.prepend(card);
 }
 
+
+const renderCard = (item, cardSelector) => {
+   
+  const card = new Card(item, cardSelector);
+
+  const cardElement = card.generateCard();
+  return cardElement;
+
+};
+
+
 const openPopupNewPlace = () => {
   togglePopup(popupNewPlace);
 
@@ -138,19 +142,32 @@ const saveNewPlace = (event) => {
     link: popupImgNewPlace.value,
   };
 
-  addCard(createCard(newCardData));
+  //addCard(createCard(newCardData));
+  addCard(renderCard(newCardData, ".element-template"));
   togglePopup(popupNewPlace);
 }
 
 const addCards = (arrCards) => {
+  elementsSection.innerHTML = '';
+  const cardSelector = ".element-template";
   arrCards.forEach((card) => {
     // отображаем на странице
-    addCard(createCard(card));
+    //addCard(createCard(card));
+    addCard(renderCard(card, cardSelector));
   });
 }
 
+const addHandlerOnEscape = () => {
+  document.addEventListener('keydown', closePopupOnEscapeHandler);
+}
+
+const removeHandlerOnEscape = () => {
+  document.removeEventListener('keydown', closePopupOnEscapeHandler);
+}
+
+
 const closePopupOnEscapeHandler = (evt) => {
-  
+
   if (evt.key === "Escape") {
     const popupElement = allPopups.find(function (popupItem) {
       return isPopupOpened(popupItem);
@@ -186,3 +203,12 @@ closeButtonBigImg.addEventListener("click", () => togglePopup(popupBigImg));
 
 
 addCards(initialCards);
+
+export { addHandlerOnEscape, removeHandlerOnEscape};
+  
+  // импорт из других файлов
+import { initialCards } from './initial-cards.js';
+import { Card } from './Card.js';
+import { resetPopupForm, toggleButtonStateOnForm } from './validate.js';
+import { popupProfileInfo, popupNewPlace, popupBigImg } from './constants.js'; // попапы
+import { closeButton, closeButtonNewPlace, closeButtonBigImg } from './constants.js'; // кнопки закрытия попапов
