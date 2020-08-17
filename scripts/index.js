@@ -76,7 +76,7 @@ const addCard = (card) => {
 
 
 const renderCard = (item, cardSelector) => {
-   
+
   const card = new Card(item, cardSelector);
 
   const cardElement = card.generateCard();
@@ -93,7 +93,7 @@ const openPopupNewPlace = () => {
   // при открытии попапа очистим ошибки валидации и установим доступность кнопки Сохранить
   newPlaceFormValidator.resetValidationErrors();
   newPlaceFormValidator.toggleButtonStateOnForm();
-  }
+}
 
 const saveNewPlace = (event) => {
   event.preventDefault();
@@ -112,7 +112,7 @@ const addCards = (arrCards) => {
   const cardSelector = "#element-template";
   arrCards.forEach((card) => {
     // отображаем на странице
-        addCard(renderCard(card, cardSelector));
+    addCard(renderCard(card, cardSelector));
   });
 }
 

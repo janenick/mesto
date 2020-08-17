@@ -5,7 +5,10 @@ export class Card {
     this._cardSelector = cardSelector;
     this.name = data.name;
     this.link = data.link;
+    this._getTemplate = this._getTemplate.bind(this);
+    this._handleСhangeLike = this._handleСhangeLike.bind(this);
     this._handleDeleteCard = this._handleDeleteCard.bind(this);
+    this.generateCard = this.generateCard.bind(this);
   }
 
   _getTemplate() {
@@ -27,7 +30,7 @@ export class Card {
 
   }
 
-  _handleСhangeLike (event) {
+  _handleСhangeLike(event) {
     // в переменной eventTarget окажется элемент
     // button, на который мы кликнули
     const eventTarget = event.target;
@@ -35,7 +38,7 @@ export class Card {
 
   }
 
-  _handleDeleteCard () {
+  _handleDeleteCard() {
 
     this._element.remove();
   }
