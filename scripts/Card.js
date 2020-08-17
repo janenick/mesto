@@ -1,15 +1,11 @@
 import { showImage } from './index.js';
-/*import { openPopup, closePopup } from './utils.js';
-import { popupProfileInfo, popupNewPlace, popupBigImg } from './constants.js'; // попапы
-import { closeButton, closeButtonNewPlace, closeButtonBigImg } from './constants.js'; // кнопки закрытия попапов
-import { cardBigImg, captionBigImg } from './constants.js'; // элементы попапа с всплывающей большой картинкой (popupBigImg)
-*/
 
 export class Card {
   constructor(data, cardSelector) {
     this._cardSelector = cardSelector;
     this.name = data.name;
     this.link = data.link;
+    this._handleDeleteCard = this._handleDeleteCard.bind(this);
   }
 
   _getTemplate() {
@@ -29,22 +25,8 @@ export class Card {
     // добавим "корзину"
     this._element.querySelector('.element__btn-trash').addEventListener('click', this._handleDeleteCard);
 
-    // обработчик закрытия попапа "всплывающей картинки"
-    //closeButtonBigImg.addEventListener('click', this._handleCloseBigImage);
-
   }
 
- /* _handleShowBigImage = () => {
-
-    cardBigImg.src = this.link;
-    captionBigImg.textContent = this.name;
-    openPopup(popupBigImg);
-  }
-
-  _handleCloseBigImage() {
-    closePopup(popupBigImg);
-  }
-*/
   _handleСhangeLike (event) {
     // в переменной eventTarget окажется элемент
     // button, на который мы кликнули
@@ -53,7 +35,7 @@ export class Card {
 
   }
 
-  _handleDeleteCard = () => {
+  _handleDeleteCard () {
 
     this._element.remove();
   }

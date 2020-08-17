@@ -47,7 +47,7 @@ export class FormValidator {
     }
   }
 
-  toggleButtonStateOnForm = () => {
+  toggleButtonStateOnForm () {
     this._toggleButtonState();
   }
 
