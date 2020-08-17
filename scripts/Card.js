@@ -45,7 +45,7 @@ export class Card {
     closePopup(popupBigImg);
   }
 */
-  _handleСhangeLike = (event) => {
+  _handleСhangeLike (event) {
     // в переменной eventTarget окажется элемент
     // button, на который мы кликнули
     const eventTarget = event.target;

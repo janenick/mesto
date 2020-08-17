@@ -1,7 +1,8 @@
 // импорт из других файлов
 import { initialCards } from './initial-cards.js';
 import { Card } from './card.js';
-import { resetPopupForm, toggleButtonStateOnForm } from './validate.js';
+import { FormValidator } from './formValidator.js';
+
 import {
   allPopups,
   //элементы секции profile
@@ -10,12 +11,14 @@ import {
   popupProfileInfo, popupProfileForm, popupFormElement, saveButton, closeButton,
   popupName, popupStatus,
   //элементы попапа добавления карточки
-  popupNewPlace, popupFormElementNewPlace, saveButtonNewPlace, closeButtonNewPlace,
-  popupNameNewPlace, popupImgNewPlace,
+  popupNewPlace, popupNewPlaceForm, popupFormElementNewPlace, saveButtonNewPlace,
+  closeButtonNewPlace, popupNameNewPlace, popupImgNewPlace,
   //элементы попапа "большой картинки"
   popupBigImg, closeButtonBigImg, cardBigImg, captionBigImg,
   //секция с карточками
-  elementsSection
+  elementsSection,
+  //объект настроек с классами формы
+  validationParams
 } from './constants.js';
 
 
@@ -32,8 +35,6 @@ function togglePopup(currentPopup) {
   else {
     removeHandlerOnEscape();
 
-    // очистим поля заполнения
-    resetPopupForm(currentPopup);
   }
 }
 
@@ -42,8 +43,10 @@ const editPopupProfile = () => {
   popupName.value = profileName.textContent;
   popupStatus.value = profileStatus.textContent;
 
-  // при открытии попапа установим доступность кнопки Сохранить
-  toggleButtonStateOnForm(popupProfileForm, saveButton);
+  // при открытии попапа очистим ошибки валидации
+  // установим доступность кнопки Сохранить
+  editFormValidator.resetValidationErrors();
+  editFormValidator.toggleButtonStateOnForm();
 
 }
 
@@ -83,12 +86,14 @@ const renderCard = (item, cardSelector) => {
 
 
 const openPopupNewPlace = () => {
+  popupNameNewPlace.value = "";
+  popupImgNewPlace.value = "";
   togglePopup(popupNewPlace);
 
-  // при открытии попапа установим доступность кнопки Сохранить
-  toggleButtonStateOnForm(popupNewPlace, saveButtonNewPlace);
-
-}
+  // при открытии попапа очистим ошибки валидации и установим доступность кнопки Сохранить
+  newPlaceFormValidator.resetValidationErrors();
+  newPlaceFormValidator.toggleButtonStateOnForm();
+  }
 
 const saveNewPlace = (event) => {
   event.preventDefault();
@@ -97,13 +102,14 @@ const saveNewPlace = (event) => {
     link: popupImgNewPlace.value,
   };
 
-  addCard(renderCard(newCardData, ".element-template"));
+  addCard(renderCard(newCardData, "#element-template"));
+  popupNewPlaceForm.reset();
   togglePopup(popupNewPlace);
 }
 
 const addCards = (arrCards) => {
   elementsSection.innerHTML = '';
-  const cardSelector = ".element-template";
+  const cardSelector = "#element-template";
   arrCards.forEach((card) => {
     // отображаем на странице
         addCard(renderCard(card, cardSelector));
@@ -141,7 +147,7 @@ const togglePopupWithClick = (evt, currentPopup) => {
 
 
 editButton.addEventListener("click", editPopupProfile);
-popupFormElement.addEventListener("submit", saveProfile);
+popupProfileForm.addEventListener("submit", saveProfile);
 closeButton.addEventListener("click", () => togglePopup(popupProfileInfo));
 
 popupProfileInfo.addEventListener("mouseup", (evt) => togglePopupWithClick(evt, popupProfileInfo));
@@ -149,11 +155,14 @@ popupNewPlace.addEventListener("mouseup", (evt) => togglePopupWithClick(evt, pop
 popupBigImg.addEventListener("mouseup", (evt) => togglePopupWithClick(evt, popupBigImg));
 
 addButton.addEventListener("click", openPopupNewPlace);
-popupFormElementNewPlace.addEventListener("submit", saveNewPlace);
+popupNewPlaceForm.addEventListener("submit", saveNewPlace);
 closeButtonNewPlace.addEventListener("click", () => togglePopup(popupNewPlace));
 
 closeButtonBigImg.addEventListener("click", () => togglePopup(popupBigImg));
 
 
 addCards(initialCards);
-
+const editFormValidator = new FormValidator(popupProfileForm, validationParams);
+const newPlaceFormValidator = new FormValidator(popupNewPlaceForm, validationParams);
+editFormValidator.enableValidation();
+newPlaceFormValidator.enableValidation();

@@ -15,6 +15,7 @@ export const popupName = popupProfileInfo.querySelector(".popup__input_type_name
 export const popupStatus = popupProfileInfo.querySelector(".popup__input_type_status");
 
 export const popupNewPlace = document.querySelector(".popup_type_new-place");
+export const popupNewPlaceForm = popupNewPlace.querySelector(".popup__form");
 export const popupFormElementNewPlace = popupNewPlace.querySelector(".popup__container");
 export const saveButtonNewPlace = popupNewPlace.querySelector(".popup__btn-save");
 export const closeButtonNewPlace = popupNewPlace.querySelector(".popup__btn-close");
@@ -28,3 +29,15 @@ export const captionBigImg = popupBigImg.querySelector(".popup__caption");
 
 export const elementsSection = document.querySelector(".elements");
 export const newCardTemplate = document.querySelector("#element-template").content;
+
+// константы файла валидации
+export const validationParams = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__btn-save',
+  inactiveButtonClass: 'popup__btn-save_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__input-error_visible'
+};
+
+export const errorSuffix = "-error";
