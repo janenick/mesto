@@ -5,6 +5,7 @@ import { FormValidator } from './formValidator.js';
 import Section from './Section.js';
 import PopupWithImage from './PopupWithImage.js';
 import PopupWithForm from './PopupWithForm.js';
+import UserInfo from './UserInfo.js';
 
 import {
   allPopups,
@@ -195,17 +196,26 @@ const addCardPopup = new PopupWithForm('.popup_type_new-place',
   });
 addCardPopup.setEventListeners();
 
+const infoUser = new UserInfo({
+  nameSelector: '.profile__name',
+  infoSelector: '.profile__status'
+});
 
 const infoPopup = new PopupWithForm('.popup_type_profile',
   '.popup__btn-close',
   '.popup__input_type_name',
   '.popup__input_type_status',
+  (...data) => {
+    console.log('сабмит попапа профиля');
+    infoUser.setUserInfo(...data);
+  }
+  /*
   (name, info) => {
    
     profileName.textContent = name.value;
     profileStatus.textContent = info.value;
-   
-  });
+   */
+  );
 infoPopup.setEventListeners();
 
 const CardList = new Section({
@@ -225,9 +235,10 @@ const CardList = new Section({
 // функция открытия popup редактирования профиля
 function openPopupProfile() {
   //editFormValidator.clearErrors();
+  const profileInfo = infoUser.getUserInfo();
   infoPopup.openPopup({
-    name: profileName.textContent,
-    info: profileStatus.textContent
+    name: profileInfo.name,
+    info: profileInfo.info
   });
 }
 

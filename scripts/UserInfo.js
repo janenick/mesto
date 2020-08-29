@@ -1,15 +1,21 @@
+import { profileInfo } from './constants.js';
+
 export default class UserInfo {
-  constructor(nameSelector, infoSelector) {
+  constructor({ nameSelector, infoSelector }) {
     this._name = profileInfo.querySelector(nameSelector);
-    this._status = profileInfo.querySelector(infoSelector);
+    this._info = profileInfo.querySelector(infoSelector);
   }
 
-  getUserInfo({ name, status }) {
-
+  getUserInfo() {
+    return {
+      name: this._name.textContent,
+      info: this._info.textContent
+    };
 }
 
-  setUserInfo({ name, status }) {
-
+  setUserInfo({ ...data }) {
+    this._name.textContent = data.name;
+    this._info.textContent = data.info;
   }
 
 }

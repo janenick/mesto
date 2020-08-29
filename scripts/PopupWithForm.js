@@ -14,10 +14,10 @@ export default class PopupWithForm extends Popup {
   }
 
   openPopup(data) {
+    
+    super.openPopup();
     this._popupName.value = data.name;
     this._popupInfo.value = data.info;
-    super.openPopup();
-
   }
 
   closePopup() {
@@ -30,7 +30,10 @@ export default class PopupWithForm extends Popup {
     super.setEventListeners();
     this._formSubmit.addEventListener('submit', (e) => {
       e.preventDefault();
-      this._handleFormSubmit(this._popupName, this._popupInfo);
+      this._handleFormSubmit({
+        name: this._popupName.value,
+        info: this._popupInfo.value
+      });
       this.closePopup();
     });
   }
