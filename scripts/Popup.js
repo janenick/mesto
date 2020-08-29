@@ -38,6 +38,6 @@ export default class Popup {
     this._popupCloseButton.addEventListener('click', () => {
       this.closePopup();
     });
-    //this._popupElement.addEventListener("mouseup", () => { this.closePopup(); });
+    this._popupElement.addEventListener("mouseup", () => { this.closePopup(); });
   }
 }
