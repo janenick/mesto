@@ -41,3 +41,5 @@ export const validationParams = {
 };
 
 export const errorSuffix = "-error";
+
+export const cardListSelector = '.elements'; // сюда вставляем карточки

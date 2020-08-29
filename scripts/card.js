@@ -1,11 +1,11 @@
-import { showImage } from './index.js';
+//import { showImage } from './index.js';
 
 export class Card {
-  constructor(data, cardSelector) {
+  constructor({ data, handleCardClick }, cardSelector) {
     this._cardSelector = cardSelector;
     this.name = data.name;
     this.link = data.link;
-    this._getTemplate = this._getTemplate.bind(this);
+    this._handleCardClick = handleCardClick;
     this._handleСhangeLike = this._handleСhangeLike.bind(this);
     this._handleDeleteCard = this._handleDeleteCard.bind(this);
     this.generateCard = this.generateCard.bind(this);
@@ -20,7 +20,8 @@ export class Card {
 
   _setEventListeners() {
     //поставим обработчик "всплывающей картинки"
-    this._element.querySelector('.element__img').addEventListener('click', showImage);
+    //this._element.querySelector('.element__img').addEventListener('click', showImage);
+    this._element.querySelector('.element__img').addEventListener('click', this._handleCardClick);
 
     //поставим сердечку обработчик клика
     this._element.querySelector('.element__btn-like').addEventListener('click', this._handleСhangeLike);
