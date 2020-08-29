@@ -23,6 +23,12 @@ export default class Popup {
     }
   }
   
+  _handleOverlayClose(evt) {
+    console.log("_handleOverlayClose", evt, this._popupElement);
+    if (evt.target !== this._popupElement) { return }
+    this.closePopup();
+  }
+
   openPopup() {
     this._addHandlerOnEscape();
     this._popupElement.classList.add('popup_opened');
@@ -38,6 +44,6 @@ export default class Popup {
     this._popupCloseButton.addEventListener('click', () => {
       this.closePopup();
     });
-    this._popupElement.addEventListener("mouseup", () => { this.closePopup(); });
+    this._popupElement.addEventListener("mouseup", (evt) => { this._handleOverlayClose(evt)});
   }
 }

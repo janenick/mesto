@@ -20,7 +20,6 @@ export class Card {
 
   _setEventListeners() {
     //поставим обработчик "всплывающей картинки"
-    //this._element.querySelector('.element__img').addEventListener('click', showImage);
     this._element.querySelector('.element__img').addEventListener('click', this._handleCardClick);
 
     //поставим сердечку обработчик клика
