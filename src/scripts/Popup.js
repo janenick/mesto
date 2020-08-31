@@ -8,11 +8,11 @@ export default class Popup {
     
   }
 
-  _addHandlerOnEscape = () => {
+  _addHandlerOnEscape() {
     document.addEventListener('keydown', this._handleEscClose);
   }
 
-  _removeHandlerOnEscape = () => {
+  _removeHandlerOnEscape() {
     document.removeEventListener('keydown', this._handleEscClose);
   }
 

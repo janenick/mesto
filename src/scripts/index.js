@@ -19,6 +19,8 @@ import {
   cardListSelector //класс секции для вставки карточек
 } from './constants.js';
 
+import '../pages/index.css'; // импорт главного файла стилей
+
 const editFormValidator = new FormValidator(popupProfileForm, validationParams);
 const newPlaceFormValidator = new FormValidator(popupNewPlaceForm, validationParams);
 editFormValidator.enableValidation();
