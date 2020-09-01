@@ -1,4 +1,4 @@
-import { isPopupOpened } from './utils.js';
+import { isPopupOpened } from '../utils/utils.js';
 
 export default class Popup {
   constructor(popupSelector, popupCloseBtnSelector) {

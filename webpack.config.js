@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-  entry: { main: './src/scripts/index.js' },
+  entry: { main: './src/pages/index.js' },
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'main.js' // указали в какой файл будет собираться весь js и дали ему имя
@@ -31,11 +31,30 @@ module.exports = {
       // добавили правило для обработки файлов
       {
         // регулярное выражение, которое ищет все файлы с такими расширениями
-        test: /\.(png|svg|jpe?g|gif|woff2|woff)$/i,
+        test: /\.(png|svg|jpe?g|gif)$/i,
         // при обработке этих файлов нужно использовать file-loader
+        // + поместить в папку images
         use: [
           {
-            loader: 'file-loader'
+            loader: 'file-loader',
+            options: {
+              outputPath: './images'
+            }
+          }
+        ]
+      },
+
+      {
+        // регулярное выражение, которое ищет все файлы с такими расширениями
+        test: /\.(woff2|woff)$/i,
+        // при обработке этих файлов нужно использовать file-loader
+        // + поместить в папку fonts
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              outputPath: './fonts'
+            }
           }
         ]
       },

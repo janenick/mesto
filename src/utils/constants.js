@@ -1,5 +1,3 @@
-export const allPopups = Array.from(document.querySelectorAll('.popup'));
-
 export const profileInfo = document.querySelector(".profile__info");
 export const editButton = profileInfo.querySelector(".profile__btn-edit");
 export const addButton = document.querySelector(".profile__btn-add");

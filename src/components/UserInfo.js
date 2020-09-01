@@ -1,4 +1,4 @@
-import { profileInfo } from './constants.js';
+import { profileInfo } from '../utils/constants.js';
 
 export default class UserInfo {
   constructor({ nameSelector, infoSelector }) {

@@ -1,11 +1,11 @@
 // импорт из других файлов
-import { initialCards } from './initial-cards.js';
-import { Card } from './card.js';
-import { FormValidator } from './formValidator.js';
-import Section from './Section.js';
-import PopupWithImage from './PopupWithImage.js';
-import PopupWithForm from './PopupWithForm.js';
-import UserInfo from './UserInfo.js';
+import { initialCards } from '../utils/initial-cards.js';
+import { Card } from '../components/Card.js';
+import { FormValidator } from '../components/formValidator.js';
+import Section from '../components/Section.js';
+import PopupWithImage from '../components/PopupWithImage.js';
+import PopupWithForm from '../components/PopupWithForm.js';
+import UserInfo from '../components/UserInfo.js';
 
 import {
   //элементы секции profile
@@ -17,9 +17,9 @@ import {
    //объект настроек с классами формы
   validationParams,
   cardListSelector //класс секции для вставки карточек
-} from './constants.js';
+} from '../utils/constants.js';
 
-import '../pages/index.css'; // импорт главного файла стилей
+import './index.css'; // импорт главного файла стилей
 
 const editFormValidator = new FormValidator(popupProfileForm, validationParams);
 const newPlaceFormValidator = new FormValidator(popupNewPlaceForm, validationParams);
@@ -45,7 +45,7 @@ const infoPopup = new PopupWithForm('.popup_type_profile',
     );
 infoPopup.setEventListeners();
 
-const CardList = new Section({
+const cardList = new Section({
   items: initialCards,
   renderer: (item) => {
     const card = new Card({
@@ -55,7 +55,7 @@ const CardList = new Section({
       }
     }, '#element-template');
     const cardElement = card.generateCard();
-    CardList.addItem(cardElement);
+    cardList.addItem(cardElement);
   }
 }, cardListSelector);
 
@@ -65,7 +65,7 @@ const addCardPopup = new PopupWithForm('.popup_type_new-place',
   '.popup__input_type_new-place-img',
   '.popup__input',
   (name, info) => {
-    CardList.renderItem({name: name, link: info});
+    cardList.renderItem({name: name, link: info});
   });
 addCardPopup.setEventListeners();
 
@@ -91,4 +91,4 @@ function openPopupAdd() {
 editButton.addEventListener("click", openPopupProfile);
 addButton.addEventListener("click", openPopupAdd);
 
-CardList.renderItems();
+cardList.renderItems();

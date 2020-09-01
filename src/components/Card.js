@@ -1,12 +1,10 @@
-//import { showImage } from './index.js';
-
 export class Card {
   constructor({ data, handleCardClick }, cardSelector) {
     this._cardSelector = cardSelector;
     this.name = data.name;
     this.link = data.link;
     this._handleCardClick = handleCardClick;
-    this._handleСhangeLike = this._handleСhangeLike.bind(this);
+    this._handleChangeLike = this._handleChangeLike.bind(this);
     this._handleDeleteCard = this._handleDeleteCard.bind(this);
     this.generateCard = this.generateCard.bind(this);
   }
@@ -23,14 +21,14 @@ export class Card {
     this._element.querySelector('.element__img').addEventListener('click', this._handleCardClick);
 
     //поставим сердечку обработчик клика
-    this._element.querySelector('.element__btn-like').addEventListener('click', this._handleСhangeLike);
+    this._element.querySelector('.element__btn-like').addEventListener('click', this._handleChangeLike);
 
     // добавим "корзину"
     this._element.querySelector('.element__btn-trash').addEventListener('click', this._handleDeleteCard);
 
   }
 
-  _handleСhangeLike(event) {
+  _handleChangeLike(event) {
     // в переменной eventTarget окажется элемент
     // button, на который мы кликнули
     const eventTarget = event.target;
