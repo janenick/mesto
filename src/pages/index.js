@@ -14,7 +14,7 @@ import {
   popupProfileForm,
   //элементы попапа добавления карточки
   popupNewPlaceForm,
-   //объект настроек с классами формы
+  //объект настроек с классами формы
   validationParams,
   cardListSelector //класс секции для вставки карточек
 } from '../utils/constants.js';
@@ -39,10 +39,11 @@ const infoPopup = new PopupWithForm('.popup_type_profile',
   '.popup__input_type_name',
   '.popup__input_type_status',
   '.popup__input',
-  (name, info) => {
-    infoUser.setUserInfo({ name: name, info: info });
+  (values) => {
+    infoUser.setUserInfo({ name: values['name-input'], info: values['status-input'] });
   }
-    );
+);
+
 infoPopup.setEventListeners();
 
 const cardList = new Section({
@@ -64,8 +65,8 @@ const addCardPopup = new PopupWithForm('.popup_type_new-place',
   '.popup__input_type_new-place-name',
   '.popup__input_type_new-place-img',
   '.popup__input',
-  (name, info) => {
-    cardList.renderItem({name: name, link: info});
+  (values) => {
+    cardList.renderItem({ name: values['new-place-name-input'], link: values['new-place-img-input'] });
   });
 addCardPopup.setEventListeners();
 
