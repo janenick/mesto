@@ -82,6 +82,32 @@
       </section>
     </div>
 
+<section class="popup popup_type_avatar">
+  <div class="popup__container">
+    <button type="button" class="popup__btn-close"></button>
+
+    <form name="popup__form-avatar-edit" class="popup__form" action="#" novalidate>
+      <h2 class="popup__title">Обновить аватар</h2>
+      <label class="popup__form-field">
+        <input id="avatar-input" name="popup__input-avatar" type="url" placeholder="Ссылка на картинку" class="popup__input popup__input_type_avatar" required />
+        <span id="avatar-input-error" class="popup__input-error"></span>
+      </label>
+      <button type="submit" class="popup__btn-save">Сохранить</button>
+    </form>
+  </div>
+</section>
+
+<section class="popup popup_type_delete">
+  <div class="popup__container">
+    <button type="button" class="popup__btn-close"></button>
+
+    <form name="popup__form-avatar-edit" class="popup__form" action="#" novalidate>
+      <h2 class="popup__title">Вы уверены?</h2>
+      <button type="submit" class="popup__btn-save">Да</button>
+    </form>
+  </div>
+</section>
+
     <template id="element-template" class="element-template">
       <div class="element">
         <div class="element__container">
