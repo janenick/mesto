@@ -2,4 +2,13 @@
   border-radius: 50%;
   width: 120px;
   height: 120px;
+  display: flex;
+}
+
+.profile__avatar-img:hover {
+  opacity: 0.6;
+}
+
+.profile__avatar-img:focus {
+  outline: none;
 }

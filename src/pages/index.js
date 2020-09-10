@@ -9,7 +9,10 @@ import UserInfo from '../components/UserInfo.js';
 
 import {
   //элементы секции profile
+  avatarEditButton,
   editButton, addButton,
+  // элементы попапа редактирования аватара
+  popupAvatarForm,
   //элементы попапа редактирования профиля
   popupProfileForm,
   //элементы попапа добавления карточки
@@ -21,8 +24,10 @@ import {
 
 import './index.css'; // импорт главного файла стилей
 
+const avatarFormValidator = new FormValidator(popupAvatarForm, validationParams);
 const editFormValidator = new FormValidator(popupProfileForm, validationParams);
 const newPlaceFormValidator = new FormValidator(popupNewPlaceForm, validationParams);
+avatarFormValidator.enableValidation();
 editFormValidator.enableValidation();
 newPlaceFormValidator.enableValidation();
 
@@ -70,6 +75,27 @@ const addCardPopup = new PopupWithForm('.popup_type_new-place',
   });
 addCardPopup.setEventListeners();
 
+
+const avatarPopup = new PopupWithForm('.popup_type_avatar',
+  '.popup__btn-close',
+  '.popup__input_type_avatar',
+  '.popup__input_type_avatar',
+  '.popup__input',
+  () => {
+    console.log('avatarPopup');
+  });
+avatarPopup.setEventListeners();
+
+// функция открытия popup редактирования аватара
+function openPopupAvatar() {
+  avatarFormValidator.resetValidationErrors();
+  //const avatarInfo = infoUser.getUserInfo();
+  avatarPopup.openPopup({
+    name: '',
+    info: ''
+  });
+}
+
 // функция открытия popup редактирования профиля
 function openPopupProfile() {
   editFormValidator.resetValidationErrors();
@@ -89,6 +115,7 @@ function openPopupAdd() {
   });
 }
 
+avatarEditButton.addEventListener("click", openPopupAvatar);
 editButton.addEventListener("click", openPopupProfile);
 addButton.addEventListener("click", openPopupAdd);
 
