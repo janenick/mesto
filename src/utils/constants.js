@@ -49,3 +49,8 @@ export const validationParams = {
 export const errorSuffix = "-error";
 
 export const cardListSelector = '.elements'; // сюда вставляем карточки
+
+// для Api
+export const baseUrl = 'https://mesto.nomoreparties.co';
+export const cohortId = 'cohort-15';
+export const token = '8d0efc77-0d4b-4bf8-ae49-d7668927bf3c';

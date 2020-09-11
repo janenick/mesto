@@ -6,6 +6,7 @@ import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
+import Api from '../components/Api.js';
 
 import {
   //элементы секции profile
@@ -19,7 +20,9 @@ import {
   popupNewPlaceForm,
   //объект настроек с классами формы
   validationParams,
-  cardListSelector //класс секции для вставки карточек
+  cardListSelector, //класс секции для вставки карточек
+  //для класса Api
+  baseUrl, cohortId, token
 } from '../utils/constants.js';
 
 import './index.css'; // импорт главного файла стилей
@@ -30,6 +33,14 @@ const newPlaceFormValidator = new FormValidator(popupNewPlaceForm, validationPar
 avatarFormValidator.enableValidation();
 editFormValidator.enableValidation();
 newPlaceFormValidator.enableValidation();
+
+const api = new Api({
+  baseUrl: baseUrl + '/v1/' + cohortId,
+  headers: {
+    authorization: token,
+    'Content-Type': 'application/json'
+  }
+});
 
 const imgPopup = new PopupWithImage('.popup_type_img', '.popup__btn-close', '.popup__img', '.popup__caption');
 imgPopup.setEventListeners();
@@ -44,8 +55,10 @@ const infoPopup = new PopupWithForm('.popup_type_profile',
   '.popup__input_type_name',
   '.popup__input_type_status',
   '.popup__input',
+  api,
   (values) => {
     infoUser.setUserInfo({ name: values['name-input'], info: values['status-input'] });
+    api.changeUserInfo({ name: values['name-input'], info: values['status-input'] });
   }
 );
 
@@ -118,5 +131,36 @@ function openPopupAdd() {
 avatarEditButton.addEventListener("click", openPopupAvatar);
 editButton.addEventListener("click", openPopupProfile);
 addButton.addEventListener("click", openPopupAdd);
+
+/*--> Получим информацию, сохраненную на сервере */
+
+let infoUserFromServer = { name: 'нет инфо', info: 'нет инфо' };
+api.getAllNeededData().then(argument => {
+  console.log('argument ', argument);
+
+  console.log('инфо о пользователе с сервера ', argument[0]);
+
+  infoUserFromServer.name = argument[0].name;
+  infoUserFromServer.info = argument[0].about;
+  // внесем инфо с сервера
+
+  infoUser.setUserInfo(infoUserFromServer);
+})
+  .catch((err) => {
+    console.log(`Ошибка: ${err}`);
+
+  });
+
+/*<-- Получим информацию, сохраненную на сервере*/
+
+/*api.changeUserInfo().then(argument => {
+  
+  console.log('инфо о пользователе на сервер ', argument);
+
+  })
+  .catch((err) => {
+    console.log(`Ошибка: ${err}`);
+
+  });*/
 
 cardList.renderItems();
