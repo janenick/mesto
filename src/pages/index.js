@@ -27,7 +27,7 @@ import {
 
 import './index.css'; // импорт главного файла стилей
 
-const avatarFormValidator = new FormValidator(popupAvatarForm, validationParams);
+/*const avatarFormValidator = new FormValidator(popupAvatarForm, validationParams);
 const editFormValidator = new FormValidator(popupProfileForm, validationParams);
 const newPlaceFormValidator = new FormValidator(popupNewPlaceForm, validationParams);
 avatarFormValidator.enableValidation();
@@ -139,7 +139,7 @@ addButton.addEventListener("click", openPopupAdd);
 
 /*--> Получим информацию, сохраненную на сервере */
 
-let infoUserFromServer = { name: 'нет инфо', info: 'нет инфо' };
+/*let infoUserFromServer = { name: 'нет инфо', info: 'нет инфо' };
 api.getAllNeededData().then(argument => {
   console.log('argument ', argument);
 
@@ -159,14 +159,4 @@ api.getAllNeededData().then(argument => {
 
 /*<-- Получим информацию, сохраненную на сервере*/
 
-/*api.changeUserInfo().then(argument => {
-  
-  console.log('инфо о пользователе на сервер ', argument);
-
-  })
-  .catch((err) => {
-    console.log(`Ошибка: ${err}`);
-
-  });*/
-
-cardList.renderItems();
+/*cardList.renderItems();*/
