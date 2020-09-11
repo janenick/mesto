@@ -26,7 +26,7 @@ export default class Api {
 
 
   changeUserInfo(data) {
-    
+
     return fetch(this._baseUrl + '/users/me', {
       method: 'PATCH',
       headers: this._headers,
@@ -46,8 +46,7 @@ export default class Api {
       headers: this._headers,
 
       body: JSON.stringify({
-        name: data.name,
-        about: data.info
+        avatar: data.avatar,
       })
     })
       .then(res => {

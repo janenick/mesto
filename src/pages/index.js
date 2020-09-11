@@ -47,7 +47,8 @@ imgPopup.setEventListeners();
 
 const infoUser = new UserInfo({
   nameSelector: '.profile__name',
-  infoSelector: '.profile__status'
+  infoSelector: '.profile__status',
+  avatarSelector: '.profile__avatar-img'
 });
 
 const infoPopup = new PopupWithForm('.popup_type_profile',
@@ -83,6 +84,7 @@ const addCardPopup = new PopupWithForm('.popup_type_new-place',
   '.popup__input_type_new-place-name',
   '.popup__input_type_new-place-img',
   '.popup__input',
+  api,
   (values) => {
     cardList.renderItem({ name: values['new-place-name-input'], link: values['new-place-img-input'] });
   });
@@ -94,17 +96,20 @@ const avatarPopup = new PopupWithForm('.popup_type_avatar',
   '.popup__input_type_avatar',
   '.popup__input_type_avatar',
   '.popup__input',
-  () => {
-    console.log('avatarPopup');
+  api,
+  (values) => {
+    api.changeAvatar({ avatar: values['avatar-input'] });
+    infoUser.setUserInfo({ avatar: values['avatar-input'] });
+
   });
 avatarPopup.setEventListeners();
 
 // функция открытия popup редактирования аватара
 function openPopupAvatar() {
   avatarFormValidator.resetValidationErrors();
-  //const avatarInfo = infoUser.getUserInfo();
+  const avatarInfo = infoUser.getUserInfo();
   avatarPopup.openPopup({
-    name: '',
+    name: avatarInfo.avatar,
     info: ''
   });
 }
@@ -142,6 +147,7 @@ api.getAllNeededData().then(argument => {
 
   infoUserFromServer.name = argument[0].name;
   infoUserFromServer.info = argument[0].about;
+  infoUserFromServer.avatar = argument[0].avatar;
   // внесем инфо с сервера
 
   infoUser.setUserInfo(infoUserFromServer);
