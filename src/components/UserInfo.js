@@ -14,13 +14,11 @@ export default class UserInfo {
       info: this._info.textContent,
       avatar: this._avatar.src
     };
-}
+  }
 
   setUserInfo({ ...data }) {
-    debugger;
     if (data.name) { this._name.textContent = data.name };
     if (data.info) { this._info.textContent = data.info };
-    debugger;
     if (data.avatar) { this._avatar.src = data.avatar };
   }
 

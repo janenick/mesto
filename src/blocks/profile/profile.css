@@ -7,7 +7,8 @@
 @import url("./__main/profile__main.css");
 @import url("./__name/profile__name.css");
 @import url("./__status/profile__status.css");
-@import url("./__btn-avatar-edit/profile__btn-avatar-edit.css");
+@import url("./__btn-avatar-box/profile__btn-avatar-box.css");
+/*@import url("./__btn-avatar-edit/profile__btn-avatar-edit.css");*/
 
 .profile {
   font-family: "Inter", Arial, sans-serif;
