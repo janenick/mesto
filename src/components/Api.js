@@ -26,8 +26,22 @@ export default class Api {
 
 
   changeUserInfo(data) {
-    debugger;
+    
     return fetch(this._baseUrl + '/users/me', {
+      method: 'PATCH',
+      headers: this._headers,
+
+      body: JSON.stringify({
+        name: data.name,
+        about: data.info
+      })
+    })
+      .then(onError);
+  }
+
+  changeAvatar(data) {
+    debugger;
+    return fetch(this._baseUrl + '/users/me/avatar', {
       method: 'PATCH',
       headers: this._headers,
 
@@ -38,11 +52,11 @@ export default class Api {
     })
       .then(res => {
         if (res.ok) {
-          console.log(`Удачный запрос отправки информации о пользователе`);
+          console.log(`Удачный запрос отправки аватара`);
           return res.json();
         }
         else {
-          console.log(`Неудачный запрос отправки информации о пользователе`);
+          console.log(`Неудачный запрос отправки аватара`);
           return Promise.reject(res.status);
         }
       });
