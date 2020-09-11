@@ -10,16 +10,19 @@ export default class UserInfo {
 
   getUserInfo() {
     return {
+
       name: this._name.textContent,
       info: this._info.textContent,
-      avatar: this._avatar.src
+      avatar: this._avatar.style.backgroundImage
+      //avatar: this._avatar.src // аватар как img
     };
   }
 
   setUserInfo({ ...data }) {
     if (data.name) { this._name.textContent = data.name };
     if (data.info) { this._info.textContent = data.info };
-    if (data.avatar) { this._avatar.src = data.avatar };
+    if (data.avatar) { this._avatar.style.backgroundImage = 'url(' + data.avatar + ')' };
+    //if (data.avatar) { this._avatar.src = data.avatar }; // аватар как img
   }
 
 }

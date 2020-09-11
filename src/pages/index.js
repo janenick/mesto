@@ -13,7 +13,7 @@ import {
   avatarEditButton,
   editButton, addButton,
   // элементы попапа редактирования аватара
-  popupAvatarForm,
+  popupAvatarForm, avatarBox,
   //элементы попапа редактирования профиля
   popupProfileForm,
   //элементы попапа добавления карточки
@@ -27,7 +27,7 @@ import {
 
 import './index.css'; // импорт главного файла стилей
 
-/*const avatarFormValidator = new FormValidator(popupAvatarForm, validationParams);
+const avatarFormValidator = new FormValidator(popupAvatarForm, validationParams);
 const editFormValidator = new FormValidator(popupProfileForm, validationParams);
 const newPlaceFormValidator = new FormValidator(popupNewPlaceForm, validationParams);
 avatarFormValidator.enableValidation();
@@ -48,7 +48,8 @@ imgPopup.setEventListeners();
 const infoUser = new UserInfo({
   nameSelector: '.profile__name',
   infoSelector: '.profile__status',
-  avatarSelector: '.profile__avatar-img'
+  avatarSelector: '.profile__avatar-box'
+  //avatarSelector: '.profile__avatar-img' // аватар как img
 });
 
 const infoPopup = new PopupWithForm('.popup_type_profile',
@@ -133,13 +134,14 @@ function openPopupAdd() {
   });
 }
 
-avatarEditButton.addEventListener("click", openPopupAvatar);
+//avatarEditButton.addEventListener("click", openPopupAvatar);
+avatarBox.addEventListener("click", openPopupAvatar);
 editButton.addEventListener("click", openPopupProfile);
 addButton.addEventListener("click", openPopupAdd);
 
 /*--> Получим информацию, сохраненную на сервере */
 
-/*let infoUserFromServer = { name: 'нет инфо', info: 'нет инфо' };
+let infoUserFromServer = { name: 'нет инфо', info: 'нет инфо' };
 api.getAllNeededData().then(argument => {
   console.log('argument ', argument);
 
@@ -159,4 +161,4 @@ api.getAllNeededData().then(argument => {
 
 /*<-- Получим информацию, сохраненную на сервере*/
 
-/*cardList.renderItems();*/
+cardList.renderItems();
