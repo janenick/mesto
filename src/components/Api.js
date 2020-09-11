@@ -50,11 +50,11 @@ export default class Api {
     })
       .then(res => {
         if (res.ok) {
-          console.log(`Удачный запрос отправки аватара`);
+
           return res.json();
         }
         else {
-          console.log(`Неудачный запрос отправки аватара`);
+
           return Promise.reject(res.status);
         }
       });

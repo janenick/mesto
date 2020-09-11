@@ -1,10 +1,9 @@
 import { isPopupOpened } from '../utils/utils.js';
 
 export default class Popup {
-  constructor(popupSelector, popupCloseBtnSelector, api) {
+  constructor(popupSelector, popupCloseBtnSelector) {
     this._popupElement = document.querySelector(popupSelector);
     this._popupCloseButton = this._popupElement.querySelector(popupCloseBtnSelector);
-    this._api = api;
     this._handleEscClose = this._handleEscClose.bind(this);
     
   }

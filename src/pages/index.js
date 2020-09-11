@@ -57,7 +57,7 @@ const infoPopup = new PopupWithForm('.popup_type_profile',
   '.popup__input_type_name',
   '.popup__input_type_status',
   '.popup__input',
-  api,
+  
   (values) => {
     infoUser.setUserInfo({ name: values['name-input'], info: values['status-input'] });
     api.changeUserInfo({ name: values['name-input'], info: values['status-input'] });
@@ -85,7 +85,7 @@ const addCardPopup = new PopupWithForm('.popup_type_new-place',
   '.popup__input_type_new-place-name',
   '.popup__input_type_new-place-img',
   '.popup__input',
-  api,
+  
   (values) => {
     cardList.renderItem({ name: values['new-place-name-input'], link: values['new-place-img-input'] });
   });
@@ -97,7 +97,7 @@ const avatarPopup = new PopupWithForm('.popup_type_avatar',
   '.popup__input_type_avatar',
   '.popup__input_type_avatar',
   '.popup__input',
-  api,
+  
   (values) => {
     api.changeAvatar({ avatar: values['avatar-input'] });
     infoUser.setUserInfo({ avatar: values['avatar-input'] });
@@ -143,10 +143,7 @@ addButton.addEventListener("click", openPopupAdd);
 
 let infoUserFromServer = { name: 'нет инфо', info: 'нет инфо' };
 api.getAllNeededData().then(argument => {
-  console.log('argument ', argument);
-
-  console.log('инфо о пользователе с сервера ', argument[0]);
-
+  
   infoUserFromServer.name = argument[0].name;
   infoUserFromServer.info = argument[0].about;
   infoUserFromServer.avatar = argument[0].avatar;
