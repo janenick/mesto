@@ -1,6 +1,8 @@
+//import myID from '../utils/constants.js';
+
 const onError = (res) => {
   if (res.ok) {
-    console.log(`Удачный запрос fentch`);
+   
     return res.json();
   }
   else {
@@ -56,13 +58,45 @@ export default class Api {
       headers: this._headers
 
     })
+      .then(onError);
+  }
+
+  addNewCard({ name, link }) {
+    return fetch(`${this._baseUrl}/cards`, {
+      method: 'POST',
+      headers: this._headers,
+
+      body: JSON.stringify({
+        name: name,
+        link: link
+      })
+
+    })
       .then(res => {
         if (res.ok) {
-          console.log("Запрос карточек ок");
+          console.log("Отправка карточки ок");
           return res.json();
         }
         else {
-          console.log("Запрос карточек не прошел");
+          console.log("Отправка карточки не прошла");
+          return Promise.reject(res.status);
+        }
+      });
+  }
+
+  removeCard(id) {
+   
+    return fetch(`${this._baseUrl}/cards/${id}`, {
+      method: 'DELETE',
+      headers: this._headers
+    })
+      .then(res => {
+        if (res.ok) {
+          console.log("удаление ок");
+          return res.json();
+        }
+        else {
+          console.log("удаление карточки не прошло");
           return Promise.reject(res.status);
         }
       });

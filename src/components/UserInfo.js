@@ -1,10 +1,11 @@
 import { profileInfo } from '../utils/constants.js';
 
 export default class UserInfo {
-  constructor({ nameSelector, infoSelector, avatarSelector }) {
+  constructor({ nameSelector, infoSelector, avatarSelector, userID}) {
     this._name = profileInfo.querySelector(nameSelector);
     this._info = profileInfo.querySelector(infoSelector);
     this._avatar = document.querySelector(avatarSelector);
+    this.userID = userID;
 
   }
 
@@ -19,7 +20,7 @@ export default class UserInfo {
   }
 
   setUserInfo({ ...data }) {
-    if (data.userID) { this._userID = data.userID };
+    if (data.userID) { this.userID = data.userID };
     if (data.name) { this._name.textContent = data.name };
     if (data.info) { this._info.textContent = data.info };
     if (data.avatar) { this._avatar.style.backgroundImage = 'url(' + data.avatar + ')' };

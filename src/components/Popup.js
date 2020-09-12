@@ -17,7 +17,7 @@ export default class Popup {
   }
 
 
-  _handleEscClose() {
+  _handleEscClose(event) {
     if (event.key === "Escape" && isPopupOpened(this._popupElement)) {
       this.closePopup();
     }
