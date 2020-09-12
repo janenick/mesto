@@ -67,7 +67,7 @@ const infoPopup = new PopupWithForm('.popup_type_profile',
 infoPopup.setEventListeners();
 
 const cardList = new Section({
-  items: initialCards,
+  //items: initialCards, // передадим снаружи
   renderer: (item) => {
     const card = new Card({
       data: item,
@@ -147,9 +147,15 @@ api.getAllNeededData().then(argument => {
   infoUserFromServer.name = argument[0].name;
   infoUserFromServer.info = argument[0].about;
   infoUserFromServer.avatar = argument[0].avatar;
+  infoUserFromServer.userID = argument[0]._id;
   // внесем инфо с сервера
 
   infoUser.setUserInfo(infoUserFromServer);
+  console.log(argument[0]);
+
+  const initialCardsInfo = argument[1];
+  //console.log(initialCardsInfo);
+  cardList.renderItems(initialCardsInfo);
 })
   .catch((err) => {
     console.log(`Ошибка: ${err}`);
@@ -158,4 +164,4 @@ api.getAllNeededData().then(argument => {
 
 /*<-- Получим информацию, сохраненную на сервере*/
 
-cardList.renderItems();
+//cardList.renderItems(); // вызываем внутри then

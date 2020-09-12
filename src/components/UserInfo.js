@@ -19,6 +19,7 @@ export default class UserInfo {
   }
 
   setUserInfo({ ...data }) {
+    if (data.userID) { this._userID = data.userID };
     if (data.name) { this._name.textContent = data.name };
     if (data.info) { this._info.textContent = data.info };
     if (data.avatar) { this._avatar.style.backgroundImage = 'url(' + data.avatar + ')' };

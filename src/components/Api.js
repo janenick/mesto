@@ -45,21 +45,30 @@ export default class Api {
       headers: this._headers,
 
       body: JSON.stringify({
-        avatar: data.avatar,
+        avatar: data.avatar
       })
+    })
+      .then(onError);
+  }
+
+  getCardsFromServer() {
+    return fetch(this._baseUrl + '/cards', {
+      headers: this._headers
+
     })
       .then(res => {
         if (res.ok) {
-
+          console.log("Запрос карточек ок");
           return res.json();
         }
         else {
-
+          console.log("Запрос карточек не прошел");
           return Promise.reject(res.status);
         }
       });
   }
+
   getAllNeededData() {
-    return Promise.all([this.getUserInfo()]);
+    return Promise.all([this.getUserInfo(), this.getCardsFromServer()]);
   }
 }
