@@ -106,13 +106,15 @@ const createCard = (result, cardSelector) => {
       console.log('Вы нажали дизлайк');
     },
     handleDeleteClick: (id) => {
+      DelSubmitPopup.setSubmitAction(() => {
+        api.removeCard(id).then(res => {
+          console.log('Delete', id);
+          card.removeCard();
 
-      api.removeCard(id).then(res => {
-        console.log('Delete', id);
-        card.removeCard();
-
-      }).catch(err => console.error(err));
-     
+        }).catch(err => console.error(err));
+      }
+      );
+      DelSubmitPopup.openPopup();
     }
 
   }, cardSelector);
