@@ -1,16 +1,18 @@
 
 export class Card {
   constructor({ myID, ...cardData }, cardSelector) {
+
     this._cardSelector = cardSelector;
     this.myID = myID;
     this._data = cardData.data;
 
     this.handleCardClick = cardData.handleCardClick;
     this.handleLikeClick = cardData.handleLikeClick;
-    this.handleDislikeLikeClick = cardData.handleDislikeLikeClick;
+    this.handleDislikeClick = cardData.handleDislikeClick;
     this.handleDeleteClick = cardData.handleDeleteClick;
     this.generateCard = this.generateCard.bind(this);
-
+    //this.likesCount = cardData.likes.length;
+    this.isLiked = this.isLiked(myID, cardData.data);
   }
 
   _getTemplate() {
@@ -25,8 +27,9 @@ export class Card {
     this._element.querySelector('.element__img').addEventListener('click', this.handleCardClick);
 
     //поставим сердечку обработчик клика
-    this._element.querySelector('.element__btn-like').addEventListener('click', this.handleLikeClick);
-
+    this._element.querySelector('.element__btn-like').addEventListener('click', (evt) => {
+      this.isLiked ? this.handleDislikeClick(evt, this._data._id) : this.handleLikeClick(evt, this._data._id);
+    });
     // добавим "корзину"
 
     //this._element.querySelector('.element__btn-trash').addEventListener('click', this._handleDeleteCard);
@@ -36,8 +39,36 @@ export class Card {
 
   }
 
+  activateLike(data) {
+    this._element.querySelector('.element__like-sum').textContent = data.likes.length;
+    this._element.querySelector('.element__btn-like').classList.add("element__btn-like_active");
+  }
+
+  disactivateLike(data) {
+    this._element.querySelector('.element__like-sum').textContent = data.likes.length;
+    this._element.querySelector('.element__btn-like').classList.remove("element__btn-like_active");
+  }
+
+  correctLike() {
+    this.isLiked ? this.activateLike(this._data) : this.disactivateLike(this._data);
+  }
+
+  renderLikes(likesCount, isLiked) {
+    this._element.querySelector('.element__like-sum').textContent = likesCount;
+    if (isLiked)  {
+      this._element.querySelector('.element__btn-like').classList.add("element__btn-like_active");
+    }
+    else {
+      this._element.querySelector('.element__btn-like').classList.remove("element__btn-like_active"); 
+      };
+  }
+
   removeCard() {
     this._element.remove();
+  }
+
+  isLiked(myID, cardData) {
+    return cardData.likes.some((person) => person._id === myID);
   }
 
   _correctBtnDelete(userID, ownerID) {
@@ -56,13 +87,18 @@ export class Card {
 
     // Добавим данные
 
+    this._element.querySelector('.element__like-sum').textContent = this._data.likes.length;
     this._element.querySelector('.element__title').textContent = this._data.name;
     const cardImg = this._element.querySelector('.element__img');
 
     cardImg.src = this._data.link;
     cardImg.alt = this._data.name;
 
+    //установим видимость кнопки только для вновь добавляемых карточек
     this._correctBtnDelete(this.myID, this._data.owner._id);
+    
+    //проставим количество лайков и состояние лайка для текущего пользователя
+    this.renderLikes(this._data.likes.length, this.isLiked);
 
     // Вернём элемент наружу
     return this._element;

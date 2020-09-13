@@ -44,10 +44,7 @@ const api = new Api({
 });
 
 const DelSubmitPopup = new PopupConfirm('.popup_type_delete-submit',
-  '.popup__btn-close',
-  () => {
-    console.log('удаляем карточку');
-  });
+  '.popup__btn-close');
 DelSubmitPopup.setEventListeners();
 
 
@@ -99,16 +96,27 @@ const createCard = (result, cardSelector) => {
     handleCardClick: () => {
       imgPopup.openPopup(result);
     },
-    handleLikeClick: (id) => {
-      console.log('Вы нажали лайк');
+    handleLikeClick: (evt, id) => {
+      api.putLike(id).then(res => {
+        card.isLiked = true;
+
+        card.renderLikes(res.likes.length, true);
+
+      }).catch(err => console.error(err));
     },
-    handleDislikeLikeClick: (id) => {
-      console.log('Вы нажали дизлайк');
+
+
+    handleDislikeClick: (evt, id) => {
+      api.deleteLike(id).then(res => {
+        card.isLiked = false;
+        card.renderLikes(res.likes.length, false);
+      }).catch(err => console.error(err));
+
     },
     handleDeleteClick: (id) => {
       DelSubmitPopup.setSubmitAction(() => {
         api.removeCard(id).then(res => {
-          console.log('Delete', id);
+
           card.removeCard();
 
         }).catch(err => console.error(err));
@@ -117,10 +125,11 @@ const createCard = (result, cardSelector) => {
       DelSubmitPopup.openPopup();
     }
 
+
   }, cardSelector);
   return card;
-}
-    
+} // const createCard()
+
 const addCardPopup = new PopupWithForm(
   '.popup_type_new-place',
   '.popup__btn-close',
@@ -204,14 +213,21 @@ api.getAllNeededData().then(argument => {
   infoUserFromServer.userID = argument[0]._id;
 
   myID = argument[0]._id;
-   // внесем инфо с сервера
+  // внесем инфо с сервера
 
   infoUser.setUserInfo(infoUserFromServer);
-  //console.log(argument[0]);
 
   const initialCardsInfo = argument[1];
-  //console.log(initialCardsInfo);
-  //cardList.renderItems(initialCardsInfo);
+  cardList.clear();
+  initialCardsInfo.forEach((item) => {
+
+    const card = createCard(item, '#element-template');
+
+    const cardElement = card.generateCard();
+
+    cardList.addItem(cardElement);
+  });
+
 })
   .catch((err) => {
     console.log(`Ошибка: ${err}`);
@@ -219,10 +235,3 @@ api.getAllNeededData().then(argument => {
   });
 
 /*<-- Получим информацию, сохраненную на сервере*/
-
-/*api.addNewCard({ name: 'Палатка', link: 'https://unsplash.com/photos/96_yHob2TsQ' })
-  .then(data => {
-
-  console.log('данные тест карточки', data);
-});*/
-//cardList.renderItems(); // вызываем внутри then

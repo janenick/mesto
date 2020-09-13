@@ -2,7 +2,7 @@
 
 const onError = (res) => {
   if (res.ok) {
-   
+
     return res.json();
   }
   else {
@@ -72,34 +72,31 @@ export default class Api {
       })
 
     })
-      .then(res => {
-        if (res.ok) {
-          console.log("Отправка карточки ок");
-          return res.json();
-        }
-        else {
-          console.log("Отправка карточки не прошла");
-          return Promise.reject(res.status);
-        }
-      });
+      .then(onError);
   }
 
   removeCard(id) {
-   
     return fetch(`${this._baseUrl}/cards/${id}`, {
       method: 'DELETE',
       headers: this._headers
     })
-      .then(res => {
-        if (res.ok) {
-          console.log("удаление ок");
-          return res.json();
-        }
-        else {
-          console.log("удаление карточки не прошло");
-          return Promise.reject(res.status);
-        }
-      });
+      .then(onError);
+  }
+
+  putLike(id) {
+    return fetch(`${this._baseUrl}/cards/likes/${id}`, {
+      method: 'PUT',
+      headers: this._headers
+    })
+      .then(onError);
+  }
+
+  deleteLike(id) {
+    return fetch(`${this._baseUrl}/cards/likes/${id}`, {
+      method: 'DELETE',
+      headers: this._headers
+    })
+      .then(onError);
   }
 
   getAllNeededData() {
