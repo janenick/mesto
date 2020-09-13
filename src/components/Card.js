@@ -11,7 +11,6 @@ export class Card {
     this.handleDislikeClick = cardData.handleDislikeClick;
     this.handleDeleteClick = cardData.handleDeleteClick;
     this.generateCard = this.generateCard.bind(this);
-    //this.likesCount = cardData.likes.length;
     this.isLiked = this.isLiked(myID, cardData.data);
   }
 
@@ -32,7 +31,7 @@ export class Card {
     });
     // добавим "корзину"
 
-    //this._element.querySelector('.element__btn-trash').addEventListener('click', this._handleDeleteCard);
+
     this._element.querySelector('.element__btn-trash').addEventListener('click', () => {
       this.handleDeleteClick(this._data._id);
     });
@@ -55,12 +54,12 @@ export class Card {
 
   renderLikes(likesCount, isLiked) {
     this._element.querySelector('.element__like-sum').textContent = likesCount;
-    if (isLiked)  {
+    if (isLiked) {
       this._element.querySelector('.element__btn-like').classList.add("element__btn-like_active");
     }
     else {
-      this._element.querySelector('.element__btn-like').classList.remove("element__btn-like_active"); 
-      };
+      this._element.querySelector('.element__btn-like').classList.remove("element__btn-like_active");
+    };
   }
 
   removeCard() {
@@ -96,7 +95,7 @@ export class Card {
 
     //установим видимость кнопки только для вновь добавляемых карточек
     this._correctBtnDelete(this.myID, this._data.owner._id);
-    
+
     //проставим количество лайков и состояние лайка для текущего пользователя
     this.renderLikes(this._data.likes.length, this.isLiked);
 
@@ -105,75 +104,3 @@ export class Card {
   }
 
 }
-
-
-/*
-export class Card {
-  constructor({ data, handleCardClick }, cardSelector) {
-    this._cardSelector = cardSelector;
-    this.name = data.name;
-    this.link = data.link;
-    this.likes = data.likes;
-    this.ownerId = data.owner._id;
-    this.id = data._id;
-
-    this._handleCardClick = handleCardClick;
-    this._handleChangeLike = this._handleChangeLike.bind(this);
-    this._handleDeleteCard = this._handleDeleteCard.bind(this);
-    this.generateCard = this.generateCard.bind(this);
-  }
-
-  _getTemplate() {
-    const cardTemplate = document.querySelector(this._cardSelector).content.children[0];
-    this._element = cardTemplate.cloneNode(true);
-    return this._element;
-
-  }
-
-  _setEventListeners() {
-    //поставим обработчик "всплывающей картинки"
-    this._element.querySelector('.element__img').addEventListener('click', this._handleCardClick);
-
-    //поставим сердечку обработчик клика
-    this._element.querySelector('.element__btn-like').addEventListener('click', this._handleChangeLike);
-
-    // добавим "корзину"
-    this._element.querySelector('.element__btn-trash').addEventListener('click', this._handleDeleteCard);
-
-  }
-
-  _handleChangeLike(event) {
-    // в переменной eventTarget окажется элемент
-    // button, на который мы кликнули
-    const eventTarget = event.target;
-    eventTarget.classList.toggle("element__btn-like_active");
-
-  }
-
-  _handleDeleteCard() {
-
-    this._element.remove();
-  }
-
-  generateCard() {
-    // Запишем разметку в приватное поле _element.
-    // Так у других элементов появится доступ к ней.
-    this._element = this._getTemplate();
-
-    // Добавим обработчики событий
-    this._setEventListeners();
-
-    // Добавим данные
-
-    this._element.querySelector('.element__title').textContent = this.name;
-    const cardImg = this._element.querySelector('.element__img');
-
-    cardImg.src = this.link;
-    cardImg.alt = this.name;
-
-    // Вернём элемент наружу
-    return this._element;
-  }
-
-}
-*/

@@ -1,5 +1,4 @@
 export const profileInfo = document.querySelector(".profile__info");
-//export const avatarEditButton = document.querySelector(".profile__btn-avatar-edit");
 export const avatarBox = document.querySelector(".profile__avatar-box");
 export const editButton = profileInfo.querySelector(".profile__btn-edit");
 export const addButton = document.querySelector(".profile__btn-add");
@@ -8,9 +7,7 @@ export const profileStatus = profileInfo.querySelector(".profile__status");
 
 export const popupAvatarInfo = document.querySelector(".popup_type_avatar");
 export const popupAvatarForm = popupAvatarInfo.querySelector(".popup__form");
-/*export const popupFormElementAvatar = popupAvatarInfo.querySelector(".popup__container");
 export const saveButtonAvatar = popupAvatarInfo.querySelector(".popup__btn-save");
-export const closeButtonAvatar = popupAvatarInfo.querySelector(".popup__btn-close");*/
 export const popupLinkAvatar   = popupAvatarInfo.querySelector(".popup__input_type_avatar");
 
 export const popupProfileInfo = document.querySelector(".popup_type_profile");

@@ -1,5 +1,3 @@
-//import myID from '../utils/constants.js';
-
 const onError = (res) => {
   if (res.ok) {
 
@@ -102,4 +100,5 @@ export default class Api {
   getAllNeededData() {
     return Promise.all([this.getUserInfo(), this.getCardsFromServer()]);
   }
+
 }
