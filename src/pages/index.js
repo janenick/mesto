@@ -88,13 +88,7 @@ const createCard = (result, cardSelector) => {
     myID: myID,
     data: result,
     handleCardClick: () => {
-      /*cardBigImg.src = result.link;
-      cardBigImg.alt = result.name;
-      captionBigImg.textContent = result.name;*/
      imgPopup.openPopup(result);
-      //!!! переделать без параметров
-      
-    ///imgPopup.openPopup();
     },
     handleLikeClick: (evt, id) => {
       api.putLike(id).then(res => {
@@ -120,6 +114,7 @@ const createCard = (result, cardSelector) => {
         api.removeCard(id).then(res => {
           card.removeCard();
         })
+          .then(() => { delSubmitPopup.closePopup() })
           .catch((err) => {
             renderError(`Ошибка: ${err}`);
           });
@@ -142,6 +137,9 @@ const addCardPopup = new PopupWithForm(
           const card = createCard(result, '#element-template');
           const cardElement = card.generateCard();
           cardList.addItem(cardElement);
+        })
+        .then(() => {
+          addCardPopup.closePopup();
         })
         .catch((err) => {
           renderError(`Ошибка: ${err}`);
@@ -172,7 +170,6 @@ const avatarPopup = new PopupWithForm('.popup_type_avatar',
 
 // функция открытия popup редактирования аватара
 function openPopupAvatar() {
-  const avatarInfo = infoUser.getUserInfo();
   avatarFormValidator.toggleButtonStateOnForm();
   avatarFormValidator.resetValidationErrors();
   avatarPopup.openPopup();
