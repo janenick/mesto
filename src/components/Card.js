@@ -10,7 +10,6 @@ export class Card {
     this.handleLikeClick = cardData.handleLikeClick;
     this.handleDislikeClick = cardData.handleDislikeClick;
     this.handleDeleteClick = cardData.handleDeleteClick;
-    this.generateCard = this.generateCard.bind(this);
     this.isLiked = this.isLiked(myID, cardData.data);
   }
 
@@ -40,25 +39,21 @@ export class Card {
 
   activateLike(data) {
     this._element.querySelector('.element__like-sum').textContent = data.likes.length;
-    this._element.querySelector('.element__btn-like').classList.add("element__btn-like_active");
+    this._element.querySelector('.element__btn-like').classList.add('element__btn-like_active');
   }
 
   disactivateLike(data) {
     this._element.querySelector('.element__like-sum').textContent = data.likes.length;
-    this._element.querySelector('.element__btn-like').classList.remove("element__btn-like_active");
-  }
-
-  correctLike() {
-    this.isLiked ? this.activateLike(this._data) : this.disactivateLike(this._data);
+    this._element.querySelector('.element__btn-like').classList.remove('element__btn-like_active');
   }
 
   renderLikes(likesCount, isLiked) {
     this._element.querySelector('.element__like-sum').textContent = likesCount;
     if (isLiked) {
-      this._element.querySelector('.element__btn-like').classList.add("element__btn-like_active");
+      this._element.querySelector('.element__btn-like').classList.add('element__btn-like_active');
     }
     else {
-      this._element.querySelector('.element__btn-like').classList.remove("element__btn-like_active");
+      this._element.querySelector('.element__btn-like').classList.remove('element__btn-like_active');
     };
   }
 
@@ -72,7 +67,7 @@ export class Card {
 
   _correctBtnDelete(userID, ownerID) {
     if (userID === ownerID) {
-      this._element.querySelector('.element__btn-trash').classList.add("element__btn-trash_active");
+      this._element.querySelector('.element__btn-trash').classList.add('element__btn-trash_active');
     }
   }
 

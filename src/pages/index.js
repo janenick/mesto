@@ -26,6 +26,8 @@ import {
 
 import { renderLoading, renderError } from '../utils/utils.js';
 
+import { popupProfileSelector } from '../utils/selectors.js';
+
 import './index.css'; // импорт главного файла стилей
 
 let myID;
@@ -41,10 +43,9 @@ const api = new Api({
   }
 });
 
-const DelSubmitPopup = new PopupConfirm('.popup_type_delete-submit',
-  '.popup__btn-close');
+const delSubmitPopup = new PopupConfirm('.popup_type_delete-submit');
 
-const imgPopup = new PopupWithImage('.popup_type_img', '.popup__btn-close', '.popup__img', '.popup__caption');
+const imgPopup = new PopupWithImage('.popup_type_img', '.popup__img', '.popup__caption');
 
 const infoUser = new UserInfo({
   nameSelector: '.profile__name',
@@ -52,8 +53,7 @@ const infoUser = new UserInfo({
   avatarSelector: '.profile__avatar-box'
 });
 
-const infoPopup = new PopupWithForm('.popup_type_profile',
-  '.popup__btn-close',
+const infoPopup = new PopupWithForm(popupProfileSelector,
   '.popup__input_type_name',
   '.popup__input_type_status',
   '.popup__input',
@@ -103,7 +103,7 @@ const createCard = (result, cardSelector) => {
 
     },
     handleDeleteClick: (id) => {
-      DelSubmitPopup.setSubmitAction(() => {
+      delSubmitPopup.setSubmitAction(() => {
         api.removeCard(id).then(res => {
           card.removeCard();
         })
@@ -112,7 +112,7 @@ const createCard = (result, cardSelector) => {
           });
       }
       );
-      DelSubmitPopup.openPopup();
+      delSubmitPopup.openPopup();
     }
 
   }, cardSelector);
@@ -121,7 +121,6 @@ const createCard = (result, cardSelector) => {
 
 const addCardPopup = new PopupWithForm(
   '.popup_type_new-place',
-  '.popup__btn-close',
   '.popup__input_type_new-place-name',
   '.popup__input_type_new-place-img',
   '.popup__input',
@@ -146,7 +145,6 @@ const addCardPopup = new PopupWithForm(
 );
 
 const avatarPopup = new PopupWithForm('.popup_type_avatar',
-  '.popup__btn-close',
   '.popup__input_type_avatar',
   '.popup__input_type_avatar',
   '.popup__input',
@@ -199,11 +197,12 @@ function openPopupAdd() {
 
 /*--> Получим информацию, сохраненную на сервере */
 
-let infoUserFromServer = { name: 'нет инфо', info: 'нет инфо' };
-api.getAllNeededData().
-  then(argument => {
+const infoUserFromServer = { name: 'нет инфо', info: 'нет инфо' };
 
-    DelSubmitPopup.setEventListeners();
+api.getAppInfo().
+  then(([InitialUserInfo, InitialCardList]) => {
+  
+    delSubmitPopup.setEventListeners();
     imgPopup.setEventListeners();
     avatarPopup.setEventListeners();
     infoPopup.setEventListeners();
@@ -217,21 +216,18 @@ api.getAllNeededData().
     editButton.addEventListener("click", openPopupProfile);
     addButton.addEventListener("click", openPopupAdd);
 
-    infoUserFromServer.name = argument[0].name;
-    infoUserFromServer.info = argument[0].about;
-    infoUserFromServer.avatar = argument[0].avatar;
-    infoUserFromServer.userID = argument[0]._id;
+    infoUserFromServer.name = InitialUserInfo.name;
+    infoUserFromServer.info = InitialUserInfo.about;
+    infoUserFromServer.avatar = InitialUserInfo.avatar;
+    infoUserFromServer.userID = InitialUserInfo._id;
 
-    myID = argument[0]._id;
+    myID = InitialUserInfo._id;
 
     // внесем инфо с сервера
-
-    infoUser.setUserInfo(infoUserFromServer);
-
-    const initialCardsInfo = argument[1];
-
+    console.log(InitialCardList);
+    infoUser.setUserInfo(InitialUserInfo);
     cardList.clear();
-    initialCardsInfo.forEach((item) => {
+    InitialCardList.forEach((item) => {
       const card = createCard(item, '#element-template');
       const cardElement = card.generateCard();
       cardList.addItem(cardElement);

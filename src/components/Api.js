@@ -1,6 +1,5 @@
-const onError = (res) => {
+const _onError = (res) => {
   if (res.ok) {
-
     return res.json();
   }
   else {
@@ -20,57 +19,50 @@ export default class Api {
     return fetch(this._baseUrl + '/users/me', {
       headers: this._headers
     })
-
-      .then(onError);
+      .then(_onError);
   }
 
 
   changeUserInfo(data) {
-
     return fetch(this._baseUrl + '/users/me', {
       method: 'PATCH',
       headers: this._headers,
-
       body: JSON.stringify({
         name: data.name,
         about: data.info
       })
     })
-      .then(onError);
+      .then(_onError);
   }
 
   changeAvatar(data) {
     return fetch(this._baseUrl + '/users/me/avatar', {
       method: 'PATCH',
       headers: this._headers,
-
       body: JSON.stringify({
         avatar: data.avatar
       })
     })
-      .then(onError);
+      .then(_onError);
   }
 
   getCardsFromServer() {
     return fetch(this._baseUrl + '/cards', {
       headers: this._headers
-
     })
-      .then(onError);
+      .then(_onError);
   }
 
   addNewCard({ name, link }) {
     return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
       headers: this._headers,
-
       body: JSON.stringify({
         name: name,
         link: link
       })
-
     })
-      .then(onError);
+      .then(_onError);
   }
 
   removeCard(id) {
@@ -78,7 +70,7 @@ export default class Api {
       method: 'DELETE',
       headers: this._headers
     })
-      .then(onError);
+      .then(_onError);
   }
 
   putLike(id) {
@@ -86,7 +78,7 @@ export default class Api {
       method: 'PUT',
       headers: this._headers
     })
-      .then(onError);
+      .then(_onError);
   }
 
   deleteLike(id) {
@@ -94,11 +86,10 @@ export default class Api {
       method: 'DELETE',
       headers: this._headers
     })
-      .then(onError);
+      .then(_onError);
   }
 
-  getAllNeededData() {
+  getAppInfo() {
     return Promise.all([this.getUserInfo(), this.getCardsFromServer()]);
   }
-
 }
