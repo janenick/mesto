@@ -9,6 +9,7 @@ export default class PopupWithForm extends Popup {
     this._inputSelector = inputSelector;
   }
 
+
   _getInputValues() {
     this._inputList = Array.from(this._formSubmit.querySelectorAll(this._inputSelector));
     this._formValue = {};
@@ -16,18 +17,18 @@ export default class PopupWithForm extends Popup {
     return this._formValue;
   }
 
-    closePopup() {
 
+  closePopup() {
     super.closePopup();
     this._formSubmit.reset();
   }
 
+  
   setEventListeners() {
     super.setEventListeners();
     this._formSubmit.addEventListener('submit', (e) => {
       e.preventDefault();
       this._handleFormSubmit(this._getInputValues());
-     // this.closePopup();
     });
   }
 }

@@ -1,4 +1,9 @@
-import { formSelector, popupCloseBtnSelector, inputSelector } from './selectors.js';
+import {
+  // общие у всех попапов
+  formSelector, popupCloseBtnSelector, inputSelector,
+// New Place
+  popupNewPlaceSelector
+} from './selectors.js';
 
 export const profileInfo = document.querySelector('.profile__info');
 export const avatarBox = document.querySelector('.profile__avatar-box');
@@ -20,7 +25,7 @@ export const closeButton = popupProfileInfo.querySelector(popupCloseBtnSelector)
 export const popupName = popupProfileInfo.querySelector('.popup__input_type_name');
 export const popupStatus = popupProfileInfo.querySelector('.popup__input_type_status');
 
-export const popupNewPlace = document.querySelector('.popup_type_new-place');
+export const popupNewPlace = document.querySelector(popupNewPlaceSelector);
 export const popupNewPlaceForm = popupNewPlace.querySelector(formSelector);
 export const popupFormElementNewPlace = popupNewPlace.querySelector('.popup__container');
 export const saveButtonNewPlace = popupNewPlace.querySelector('.popup__btn-save');

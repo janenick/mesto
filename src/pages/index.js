@@ -13,17 +13,15 @@ import {
   editButton, addButton,
   // элементы попапа редактирования аватара
   popupAvatarForm, avatarBox, saveButtonAvatar,
-  popupLinkAvatar,
   //элементы попапа редактирования профиля
   
   popupProfileForm, saveButton,
   popupName, popupStatus,
+
   //элементы попапа добавления карточки
   popupNewPlaceForm, saveButtonNewPlace,
   popupNameNewPlace, popupImgNewPlace,
 
-  // элементы попапа большой картинки
-  cardBigImg, captionBigImg,
   //объект настроек с классами формы
   validationParams,
   cardListSelector, //класс секции для вставки карточек
@@ -33,7 +31,13 @@ import {
 
 import { renderLoading, renderError } from '../utils/utils.js';
 
-import { popupProfileSelector } from '../utils/selectors.js';
+import {
+  //селекторы попапа редактирования профиля
+  popupProfileSelector,
+  profileNameSelector, profileStatusSelector, profileAvatarSelector,
+  //селекторы попапа добавления карточки
+  popupNewPlaceSelector,
+} from '../utils/selectors.js';
 
 import './index.css'; // импорт главного файла стилей
 
@@ -55,9 +59,9 @@ const delSubmitPopup = new PopupConfirm('.popup_type_delete-submit');
 const imgPopup = new PopupWithImage('.popup_type_img');
 
 const infoUser = new UserInfo({
-  nameSelector: '.profile__name',
-  infoSelector: '.profile__status',
-  avatarSelector: '.profile__avatar-box'
+  nameSelector: profileNameSelector,
+  infoSelector: profileStatusSelector,
+  avatarSelector: profileAvatarSelector
 });
 
 const infoPopup = new PopupWithForm(popupProfileSelector,
@@ -68,9 +72,7 @@ const infoPopup = new PopupWithForm(popupProfileSelector,
         .then((res) => {
           infoUser.setUserInfo({ name: res.name, info: res.about });
         })
-        .then(() => {
-          infoPopup.closePopup();
-        })
+        .then(() => infoPopup.closePopup())
         .catch((err) => {
           renderError(`Ошибка: ${err}`);
         })
@@ -92,9 +94,7 @@ const createCard = (result, cardSelector) => {
     },
     handleLikeClick: (evt, id) => {
       api.putLike(id).then(res => {
-        card.isLiked = true;
-        card.renderLikes(res.likes.length, true);
-
+      card.updateLikes(res);
       })
         .catch((err) => {
           renderError(`Ошибка: ${err}`);
@@ -102,8 +102,7 @@ const createCard = (result, cardSelector) => {
     },
     handleDislikeClick: (evt, id) => {
       api.deleteLike(id).then(res => {
-        card.isLiked = false;
-        card.renderLikes(res.likes.length, false);
+      card.updateLikes(res);
       }).catch((err) => {
         renderError(`Ошибка: ${err}`);
       });
@@ -114,7 +113,7 @@ const createCard = (result, cardSelector) => {
         api.removeCard(id).then(res => {
           card.removeCard();
         })
-          .then(() => { delSubmitPopup.closePopup() })
+          .then(() => delSubmitPopup.closePopup())
           .catch((err) => {
             renderError(`Ошибка: ${err}`);
           });
@@ -128,7 +127,7 @@ const createCard = (result, cardSelector) => {
 } // const createCard()
 
 const addCardPopup = new PopupWithForm(
-  '.popup_type_new-place',
+  popupNewPlaceSelector,
   {
     handleFormSubmit: (values) => {
       renderLoading(true, saveButtonNewPlace, 'Сохранение...');
@@ -138,9 +137,7 @@ const addCardPopup = new PopupWithForm(
           const cardElement = card.generateCard();
           cardList.addItem(cardElement);
         })
-        .then(() => {
-          addCardPopup.closePopup();
-        })
+        .then(() => addCardPopup.closePopup())
         .catch((err) => {
           renderError(`Ошибка: ${err}`);
         })
@@ -159,6 +156,7 @@ const avatarPopup = new PopupWithForm('.popup_type_avatar',
         .then((result) => {
           infoUser.setUserInfo({ avatar: result.avatar });
         })
+        .then(() => avatarPopup.closePopup())
         .catch((err) => {
           renderError(`Ошибка: ${err}`);
         })

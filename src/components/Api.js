@@ -24,7 +24,6 @@ export default class Api {
 
 
   changeUserInfo(data) {
-    debugger;
     return fetch(this._baseUrl + '/users/me', {
       method: 'PATCH',
       headers: this._headers,
