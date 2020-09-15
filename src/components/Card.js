@@ -1,3 +1,5 @@
+import { cssClasses, cssSelectors } from '../utils/constants.js';
+
 export class Card {
   constructor({ myID, ...cardData }, cardSelector) {
 
@@ -23,31 +25,31 @@ export class Card {
 
   _setEventListeners() {
     //поставим обработчик "всплывающей картинки"
-    this._element.querySelector('.element__img').addEventListener('click', this.handleCardClick);
+    this._element.querySelector(cssSelectors.elementImg).addEventListener('click', this.handleCardClick);
 
     //поставим сердечку обработчик клика
-    this._element.querySelector('.element__btn-like').addEventListener('click', (evt) => {
+    this._element.querySelector(cssSelectors.elementBtnLikeSelector).addEventListener('click', (evt) => {
       this._isLiked ? this.handleDislikeClick(evt, this._data._id) : this.handleLikeClick(evt, this._data._id);
     });
 
     // добавим "корзину"
-    this._element.querySelector('.element__btn-trash').addEventListener('click', () => {
+    this._element.querySelector(cssSelectors.elementBtnTrashSelector).addEventListener('click', () => {
       this.handleDeleteClick(this._data._id);
     });
   }
 
 
   _renderLikes() {
-    this._element.querySelector('.element__like-sum').textContent = this._likes;
+    this._element.querySelector(cssSelectors.elementLikeSumSelector).textContent = this._likes;
   }
 
 
   _renderLikesBtn() {
     if (this._isLiked) {
-      this._element.querySelector('.element__btn-like').classList.add('element__btn-like_active');
+      this._element.querySelector(cssSelectors.elementBtnLikeSelector).classList.add(cssClasses.elementBtnLikeActiveClass);
     }
     else {
-      this._element.querySelector('.element__btn-like').classList.remove('element__btn-like_active');
+      this._element.querySelector(cssSelectors.elementBtnLikeSelector).classList.remove(cssClasses.elementBtnLikeActiveClass);
     };
   }
 
@@ -72,7 +74,7 @@ export class Card {
 
   _correctBtnDelete(userID, ownerID) {
     if (userID === ownerID) {
-      this._element.querySelector('.element__btn-trash').classList.add('element__btn-trash_active');
+      this._element.querySelector(cssSelectors.elementBtnTrashSelector).classList.add(cssClasses.elementBtnTrashActiveClass);
     }
   }
 
@@ -86,9 +88,9 @@ export class Card {
     this._setEventListeners();
 
     // Добавим данные
-    this._element.querySelector('.element__like-sum').textContent = this._likes;
-    this._element.querySelector('.element__title').textContent = this._data.name;
-    const cardImg = this._element.querySelector('.element__img');
+    this._element.querySelector(cssSelectors.elementLikeSumSelector).textContent = this._likes;
+    this._element.querySelector(cssSelectors.elementTitle).textContent = this._data.name;
+    const cardImg = this._element.querySelector(cssSelectors.elementImg);
 
     cardImg.src = this._data.link;
     cardImg.alt = this._data.name;

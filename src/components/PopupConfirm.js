@@ -1,10 +1,10 @@
 import Popup from './Popup.js';
-import { formSelector } from '../utils/selectors.js';
+import { cssSelectors } from '../utils/constants.js';
 
 export default class PopupConfirm extends Popup {
   constructor(popupSelector) {
     super(popupSelector);
-    this._formSubmit = this._popupElement.querySelector(formSelector);
+    this._formSubmit = this._popupElement.querySelector(cssSelectors.formSelector);
   }
 
 

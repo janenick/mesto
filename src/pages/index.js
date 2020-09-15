@@ -1,4 +1,5 @@
 // импорт из других файлов
+console.log('begin');
 import { Card } from '../components/Card.js';
 import { FormValidator } from '../components/formValidator.js';
 import Section from '../components/Section.js';
@@ -7,15 +8,21 @@ import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
 import Api from '../components/Api.js';
 import PopupConfirm from '../components/PopupConfirm.js';
+import cssClasses from '../utils/constants.js';
+console.log('cssClasses', cssClasses);
+debugger;
+/*import {
 
-import {
+  cssSelectors,
+  elements,
+  inputNames,
   //элементы секции profile
   editButton, addButton,
   // элементы попапа редактирования аватара
   popupAvatarForm, avatarBox, saveButtonAvatar,
   //элементы попапа редактирования профиля
   
-  popupProfileForm, saveButton,
+  /*popupProfileForm, saveButton,
   popupName, popupStatus,
 
   //элементы попапа добавления карточки
@@ -24,51 +31,45 @@ import {
 
   //объект настроек с классами формы
   validationParams,
-  cardListSelector, //класс секции для вставки карточек
+
   //для класса Api
-  baseUrl, cohortId, token
-} from '../utils/constants.js';
+  apiParams
+  //baseUrl, cohortId, token
+} from '../utils/constants.js';*/
 
 import { renderLoading, renderError } from '../utils/utils.js';
-
-import {
-  //селекторы попапа редактирования профиля
-  popupProfileSelector,
-  profileNameSelector, profileStatusSelector, profileAvatarSelector,
-  //селекторы попапа добавления карточки
-  popupNewPlaceSelector,
-} from '../utils/selectors.js';
-
+debugger;
 import './index.css'; // импорт главного файла стилей
 
 let myID;
-const avatarFormValidator = new FormValidator(popupAvatarForm, validationParams);
-const editFormValidator = new FormValidator(popupProfileForm, validationParams);
-const newPlaceFormValidator = new FormValidator(popupNewPlaceForm, validationParams);
+const avatarFormValidator = new FormValidator(elements.popupAvatarForm, validationParams);
+const editFormValidator = new FormValidator(elements.popupProfileForm, validationParams);
+const newPlaceFormValidator = new FormValidator(elements.popupNewPlaceForm, validationParams);
 
 const api = new Api({
-  baseUrl: baseUrl + '/v1/' + cohortId,
+  baseUrl: apiParams.baseUrl + '/v1/' + apiParams.cohortId,
   headers: {
-    authorization: token,
+    authorization: apiParams.token,
     'Content-Type': 'application/json'
   }
 });
 
-const delSubmitPopup = new PopupConfirm('.popup_type_delete-submit');
+const delSubmitPopup = new PopupConfirm(cssSelectors.popupDelSubmitSelector);
 
-const imgPopup = new PopupWithImage('.popup_type_img');
+const imgPopup = new PopupWithImage(cssSelectors.popupBigImgSelector);
 
+debugger;
 const infoUser = new UserInfo({
-  nameSelector: profileNameSelector,
-  infoSelector: profileStatusSelector,
-  avatarSelector: profileAvatarSelector
+  nameSelector: cssSelectors.profileNameSelector,
+  infoSelector: cssSelectors.profileStatusSelector,
+  avatarSelector: cssSelectors.profileAvatarSelector
 });
 
-const infoPopup = new PopupWithForm(popupProfileSelector,
+const infoPopup = new PopupWithForm(cssSelectors.popupProfileSelector,
   {
     handleFormSubmit: (values) => {
-      renderLoading(true, saveButton, 'Сохранение...');
-      api.changeUserInfo({ name: values['name-input'], about: values['status-input'] })
+      renderLoading(true, elements.saveButton, 'Сохранение...');
+      api.changeUserInfo({ name: values[inputNames.profileNameInput], about: values[inputNames.profileStatusInput] })
         .then((res) => {
           infoUser.setUserInfo({ name: res.name, info: res.about });
         })
@@ -77,24 +78,24 @@ const infoPopup = new PopupWithForm(popupProfileSelector,
           renderError(`Ошибка: ${err}`);
         })
         .finally(() => {
-          renderLoading(false, saveButton, 'Сохранить');
+          renderLoading(false, elements.saveButton, 'Сохранить');
         });
     }
   }
 );
 
-const cardList = new Section(cardListSelector);
+const cardList = new Section(cssSelectors.cardListSelector);
 
 const createCard = (result, cardSelector) => {
   const card = new Card({
     myID: myID,
     data: result,
     handleCardClick: () => {
-     imgPopup.openPopup(result);
+      imgPopup.openPopup(result);
     },
     handleLikeClick: (evt, id) => {
       api.putLike(id).then(res => {
-      card.updateLikes(res);
+        card.updateLikes(res);
       })
         .catch((err) => {
           renderError(`Ошибка: ${err}`);
@@ -102,7 +103,7 @@ const createCard = (result, cardSelector) => {
     },
     handleDislikeClick: (evt, id) => {
       api.deleteLike(id).then(res => {
-      card.updateLikes(res);
+        card.updateLikes(res);
       }).catch((err) => {
         renderError(`Ошибка: ${err}`);
       });
@@ -127,13 +128,13 @@ const createCard = (result, cardSelector) => {
 } // const createCard()
 
 const addCardPopup = new PopupWithForm(
-  popupNewPlaceSelector,
+  cssSelectors.popupNewPlaceSelector,
   {
     handleFormSubmit: (values) => {
-      renderLoading(true, saveButtonNewPlace, 'Сохранение...');
-      api.addNewCard({ name: values['new-place-name-input'], link: values['new-place-img-input'] })
+      renderLoading(true, elements.saveButtonNewPlace, 'Сохранение...');
+      api.addNewCard({ name: values[inputNames.profileNewPlaseNameInput], link: values[inputNames.profileNewPlaseImgInput] })
         .then((result) => {
-          const card = createCard(result, '#element-template');
+          const card = createCard(result, cssSelectors.cardTemplateSelector);
           const cardElement = card.generateCard();
           cardList.addItem(cardElement);
         })
@@ -142,17 +143,17 @@ const addCardPopup = new PopupWithForm(
           renderError(`Ошибка: ${err}`);
         })
         .finally(() => {
-          renderLoading(false, saveButtonNewPlace, 'Сохранить');
+          renderLoading(false, elements.saveButtonNewPlace, 'Сохранить');
         });
     }
   }
 );
 
-const avatarPopup = new PopupWithForm('.popup_type_avatar',
+const avatarPopup = new PopupWithForm(cssSelectors.popupAvatarSelector,
   {
     handleFormSubmit: (values) => {
-      renderLoading(true, saveButtonAvatar, 'Сохранение...');
-      api.changeAvatar({ avatar: values['avatar-input'] })
+      renderLoading(true, elements.saveButtonAvatar, 'Сохранение...');
+      api.changeAvatar({ avatar: values[inputNames.avatarLinkInput] })
         .then((result) => {
           infoUser.setUserInfo({ avatar: result.avatar });
         })
@@ -161,7 +162,7 @@ const avatarPopup = new PopupWithForm('.popup_type_avatar',
           renderError(`Ошибка: ${err}`);
         })
         .finally(() => {
-          renderLoading(false, saveButtonAvatar, 'Сохранить');
+          renderLoading(false, elements.saveButtonAvatar, 'Сохранить');
         });
     }
   });
@@ -175,6 +176,7 @@ function openPopupAvatar() {
 
 // функция открытия popup редактирования профиля
 function openPopupProfile() {
+  debugger;
   const profileInfo = infoUser.getUserInfo();
   popupName.value = profileInfo.name;
   popupStatus.value = profileInfo.info;
@@ -187,7 +189,7 @@ function openPopupProfile() {
 function openPopupAdd() {
   newPlaceFormValidator.toggleButtonStateOnForm();
   newPlaceFormValidator.resetValidationErrors();
-    
+
   addCardPopup.openPopup();
 }
 
@@ -197,17 +199,17 @@ const infoUserFromServer = { name: 'нет инфо', info: 'нет инфо' };
 
 api.getAppInfo().
   then(([InitialUserInfo, InitialCardList]) => {
-  
+
     delSubmitPopup.setEventListeners();
     imgPopup.setEventListeners();
     avatarPopup.setEventListeners();
     infoPopup.setEventListeners();
     addCardPopup.setEventListeners();
 
-    avatarBox.addEventListener("click", openPopupAvatar);
-    editButton.addEventListener("click", openPopupProfile);
-    addButton.addEventListener("click", openPopupAdd);
-    
+    elements.avatarBox.addEventListener("click", openPopupAvatar);
+    elements.editButton.addEventListener("click", openPopupProfile);
+    elements.addButton.addEventListener("click", openPopupAdd);
+
     infoUserFromServer.name = InitialUserInfo.name;
     infoUserFromServer.info = InitialUserInfo.about;
     infoUserFromServer.avatar = InitialUserInfo.avatar;
@@ -220,7 +222,7 @@ api.getAppInfo().
     infoUser.setUserInfo(infoUserFromServer);
     cardList.clear();
     InitialCardList.forEach((item) => {
-      const card = createCard(item, '#element-template');
+      const card = createCard(item, cssSelectors.cardTemplateSelector);
       const cardElement = card.generateCard();
       cardList.addItem(cardElement);
     })
