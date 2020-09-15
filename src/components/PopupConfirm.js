@@ -1,9 +1,10 @@
 import Popup from './Popup.js';
+import { formSelector } from '../utils/selectors.js';
 
 export default class PopupConfirm extends Popup {
-  constructor(popupSelector, popupCloseBtnSelector) {
-    super(popupSelector, popupCloseBtnSelector);
-    this._formSubmit = this._popupElement.querySelector('.popup__form');
+  constructor(popupSelector) {
+    super(popupSelector);
+    this._formSubmit = this._popupElement.querySelector(formSelector);
   }
 
 
@@ -16,7 +17,7 @@ export default class PopupConfirm extends Popup {
     this._formSubmit.addEventListener('submit', (e) => {
       e.preventDefault();
       this._handleFormSubmit();
-      this.closePopup();
+      //this.closePopup();
     });
   }
 }

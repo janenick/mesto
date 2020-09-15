@@ -24,13 +24,13 @@ export default class Api {
 
 
   changeUserInfo(data) {
+    debugger;
     return fetch(this._baseUrl + '/users/me', {
       method: 'PATCH',
       headers: this._headers,
-      body: JSON.stringify({
-        name: data.name,
-        about: data.info
-      })
+      body: JSON.stringify(
+        data
+      )
     })
       .then(_onError);
   }

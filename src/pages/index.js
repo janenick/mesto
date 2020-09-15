@@ -13,10 +13,17 @@ import {
   editButton, addButton,
   // элементы попапа редактирования аватара
   popupAvatarForm, avatarBox, saveButtonAvatar,
+  popupLinkAvatar,
   //элементы попапа редактирования профиля
+  
   popupProfileForm, saveButton,
+  popupName, popupStatus,
   //элементы попапа добавления карточки
   popupNewPlaceForm, saveButtonNewPlace,
+  popupNameNewPlace, popupImgNewPlace,
+
+  // элементы попапа большой картинки
+  cardBigImg, captionBigImg,
   //объект настроек с классами формы
   validationParams,
   cardListSelector, //класс секции для вставки карточек
@@ -45,7 +52,7 @@ const api = new Api({
 
 const delSubmitPopup = new PopupConfirm('.popup_type_delete-submit');
 
-const imgPopup = new PopupWithImage('.popup_type_img', '.popup__img', '.popup__caption');
+const imgPopup = new PopupWithImage('.popup_type_img');
 
 const infoUser = new UserInfo({
   nameSelector: '.profile__name',
@@ -54,15 +61,15 @@ const infoUser = new UserInfo({
 });
 
 const infoPopup = new PopupWithForm(popupProfileSelector,
-  '.popup__input_type_name',
-  '.popup__input_type_status',
-  '.popup__input',
   {
     handleFormSubmit: (values) => {
       renderLoading(true, saveButton, 'Сохранение...');
-      api.changeUserInfo({ name: values['name-input'], info: values['status-input'] })
+      api.changeUserInfo({ name: values['name-input'], about: values['status-input'] })
         .then((res) => {
           infoUser.setUserInfo({ name: res.name, info: res.about });
+        })
+        .then(() => {
+          infoPopup.closePopup();
         })
         .catch((err) => {
           renderError(`Ошибка: ${err}`);
@@ -81,7 +88,13 @@ const createCard = (result, cardSelector) => {
     myID: myID,
     data: result,
     handleCardClick: () => {
-      imgPopup.openPopup(result);
+      /*cardBigImg.src = result.link;
+      cardBigImg.alt = result.name;
+      captionBigImg.textContent = result.name;*/
+     imgPopup.openPopup(result);
+      //!!! переделать без параметров
+      
+    ///imgPopup.openPopup();
     },
     handleLikeClick: (evt, id) => {
       api.putLike(id).then(res => {
@@ -121,10 +134,6 @@ const createCard = (result, cardSelector) => {
 
 const addCardPopup = new PopupWithForm(
   '.popup_type_new-place',
-  '.popup__input_type_new-place-name',
-  '.popup__input_type_new-place-img',
-  '.popup__input',
-
   {
     handleFormSubmit: (values) => {
       renderLoading(true, saveButtonNewPlace, 'Сохранение...');
@@ -145,9 +154,6 @@ const addCardPopup = new PopupWithForm(
 );
 
 const avatarPopup = new PopupWithForm('.popup_type_avatar',
-  '.popup__input_type_avatar',
-  '.popup__input_type_avatar',
-  '.popup__input',
   {
     handleFormSubmit: (values) => {
       renderLoading(true, saveButtonAvatar, 'Сохранение...');
@@ -161,38 +167,33 @@ const avatarPopup = new PopupWithForm('.popup_type_avatar',
         .finally(() => {
           renderLoading(false, saveButtonAvatar, 'Сохранить');
         });
-
-
     }
   });
 
 // функция открытия popup редактирования аватара
 function openPopupAvatar() {
-  avatarFormValidator.resetValidationErrors();
   const avatarInfo = infoUser.getUserInfo();
-  avatarPopup.openPopup({
-    name: avatarInfo.avatar,
-    info: ''
-  });
+  avatarFormValidator.toggleButtonStateOnForm();
+  avatarFormValidator.resetValidationErrors();
+  avatarPopup.openPopup();
 }
 
 // функция открытия popup редактирования профиля
 function openPopupProfile() {
-  editFormValidator.resetValidationErrors();
   const profileInfo = infoUser.getUserInfo();
-  infoPopup.openPopup({
-    name: profileInfo.name,
-    info: profileInfo.info
-  });
+  popupName.value = profileInfo.name;
+  popupStatus.value = profileInfo.info;
+  editFormValidator.toggleButtonStateOnForm();
+  editFormValidator.resetValidationErrors();
+  infoPopup.openPopup();
 }
 
 // функция открытия popup добавления карточки
 function openPopupAdd() {
+  newPlaceFormValidator.toggleButtonStateOnForm();
   newPlaceFormValidator.resetValidationErrors();
-  addCardPopup.openPopup({
-    name: '',
-    info: ''
-  });
+    
+  addCardPopup.openPopup();
 }
 
 /*--> Получим информацию, сохраненную на сервере */
@@ -208,14 +209,10 @@ api.getAppInfo().
     infoPopup.setEventListeners();
     addCardPopup.setEventListeners();
 
-    avatarFormValidator.enableValidation();
-    editFormValidator.enableValidation();
-    newPlaceFormValidator.enableValidation();
-
     avatarBox.addEventListener("click", openPopupAvatar);
     editButton.addEventListener("click", openPopupProfile);
     addButton.addEventListener("click", openPopupAdd);
-
+    
     infoUserFromServer.name = InitialUserInfo.name;
     infoUserFromServer.info = InitialUserInfo.about;
     infoUserFromServer.avatar = InitialUserInfo.avatar;
@@ -225,7 +222,7 @@ api.getAppInfo().
 
     // внесем инфо с сервера
     console.log(InitialCardList);
-    infoUser.setUserInfo(InitialUserInfo);
+    infoUser.setUserInfo(infoUserFromServer);
     cardList.clear();
     InitialCardList.forEach((item) => {
       const card = createCard(item, '#element-template');
@@ -234,6 +231,12 @@ api.getAppInfo().
     })
 
   })
+  .then(() => {
+    avatarFormValidator.enableValidation();
+    editFormValidator.enableValidation();
+    newPlaceFormValidator.enableValidation();
+  }
+  )
   .catch((err) => {
     renderError(`Не удалось загрузить информацию с сервера. Ошибка: ${err}`);
   });
