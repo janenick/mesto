@@ -2,7 +2,6 @@ import { cssClasses, cssSelectors } from '../utils/constants.js';
 
 export class Card {
   constructor({ myID, ...cardData }, cardSelector) {
-
     this._cardSelector = cardSelector;
     this.myID = myID;
     this._data = cardData.data;
