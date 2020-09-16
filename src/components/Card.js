@@ -13,6 +13,7 @@ export class Card {
     this.handleDeleteClick = cardData.handleDeleteClick;
     this._isLiked = this._isLiked(myID, this._data);
     this._likes = this._data.likes.length;
+    //debugger;
   }
 
   _getTemplate() {
@@ -84,6 +85,7 @@ export class Card {
     // Так у других элементов появится доступ к ней.
     this._element = this._getTemplate();
 
+    console.log(this._element);
     //Добавим обработчики событий
     this._setEventListeners();
 

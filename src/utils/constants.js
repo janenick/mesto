@@ -1,4 +1,4 @@
-export const cssClasses = {
+const cssClasses = {
   disabledBtnClass: 'popup__btn-save_disabled',
   inputErrorClass: 'popup__input_type_error',
   errorVisibleClass: 'popup__input-error_visible',
@@ -7,7 +7,7 @@ export const cssClasses = {
   elementBtnTrashActiveClass: 'element__btn-trash_active'
 };
 
-/*
+
 const cssSelectors = {
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
@@ -100,6 +100,7 @@ const elements = {
   avatarBox,
   editButton,
   addButton,
+  profileInfo,
   // попап аватара
   popupAvatarForm,
   saveButtonAvatar,
@@ -136,4 +137,3 @@ export {
     editButton,
     addButton
 };
-*/

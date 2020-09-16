@@ -1,5 +1,4 @@
 // импорт из других файлов
-console.log('begin');
 import { Card } from '../components/Card.js';
 import { FormValidator } from '../components/formValidator.js';
 import Section from '../components/Section.js';
@@ -8,18 +7,16 @@ import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
 import Api from '../components/Api.js';
 import PopupConfirm from '../components/PopupConfirm.js';
-import cssClasses from '../utils/constants.js';
-console.log('cssClasses', cssClasses);
-debugger;
-/*import {
+
+import {
 
   cssSelectors,
   elements,
   inputNames,
   //элементы секции profile
-  editButton, addButton,
+  //editButton, addButton,
   // элементы попапа редактирования аватара
-  popupAvatarForm, avatarBox, saveButtonAvatar,
+  //popupAvatarForm, avatarBox, saveButtonAvatar,
   //элементы попапа редактирования профиля
   
   /*popupProfileForm, saveButton,
@@ -27,7 +24,7 @@ debugger;
 
   //элементы попапа добавления карточки
   popupNewPlaceForm, saveButtonNewPlace,
-  popupNameNewPlace, popupImgNewPlace,
+  popupNameNewPlace, popupImgNewPlace,*/
 
   //объект настроек с классами формы
   validationParams,
@@ -35,10 +32,9 @@ debugger;
   //для класса Api
   apiParams
   //baseUrl, cohortId, token
-} from '../utils/constants.js';*/
+} from '../utils/constants.js';
 
 import { renderLoading, renderError } from '../utils/utils.js';
-debugger;
 import './index.css'; // импорт главного файла стилей
 
 let myID;
@@ -58,7 +54,6 @@ const delSubmitPopup = new PopupConfirm(cssSelectors.popupDelSubmitSelector);
 
 const imgPopup = new PopupWithImage(cssSelectors.popupBigImgSelector);
 
-debugger;
 const infoUser = new UserInfo({
   nameSelector: cssSelectors.profileNameSelector,
   infoSelector: cssSelectors.profileStatusSelector,
@@ -87,6 +82,7 @@ const infoPopup = new PopupWithForm(cssSelectors.popupProfileSelector,
 const cardList = new Section(cssSelectors.cardListSelector);
 
 const createCard = (result, cardSelector) => {
+  console.log('result', result);
   const card = new Card({
     myID: myID,
     data: result,
@@ -176,7 +172,6 @@ function openPopupAvatar() {
 
 // функция открытия popup редактирования профиля
 function openPopupProfile() {
-  debugger;
   const profileInfo = infoUser.getUserInfo();
   popupName.value = profileInfo.name;
   popupStatus.value = profileInfo.info;
@@ -218,10 +213,11 @@ api.getAppInfo().
     myID = InitialUserInfo._id;
 
     // внесем инфо с сервера
-    console.log(InitialCardList);
     infoUser.setUserInfo(infoUserFromServer);
     cardList.clear();
+    console.log(InitialCardList);
     InitialCardList.forEach((item) => {
+      console.log('item', item);
       const card = createCard(item, cssSelectors.cardTemplateSelector);
       const cardElement = card.generateCard();
       cardList.addItem(cardElement);
