@@ -19,7 +19,7 @@ export default class Popup {
 
 
   _handleEscClose(event) {
-    if (event.key === "Escape" && isPopupOpened(this._popupElement)) {
+    if (event.key === 'Escape' && isPopupOpened(this._popupElement)) {
       this.closePopup();
     }
   }
@@ -44,6 +44,6 @@ export default class Popup {
     this._popupCloseButton.addEventListener('click', () => {
       this.closePopup();
     });
-    this._popupElement.addEventListener("mouseup", (evt) => { this._handleOverlayClose(evt) });
+    this._popupElement.addEventListener('mouseup', (evt) => { this._handleOverlayClose(evt) });
   }
 }

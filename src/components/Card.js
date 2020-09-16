@@ -13,20 +13,18 @@ export class Card {
     this.handleDeleteClick = cardData.handleDeleteClick;
     this._isLiked = this._isLiked(myID, this._data);
     this._likes = this._data.likes.length;
-    //debugger;
   }
 
   _getTemplate() {
     const cardTemplate = document.querySelector(this._cardSelector).content.children[0];
     this._element = cardTemplate.cloneNode(true);
     return this._element;
-
   }
 
 
   _setEventListeners() {
     //поставим обработчик "всплывающей картинки"
-    this._element.querySelector(cssSelectors.elementImg).addEventListener('click', this.handleCardClick);
+    this._element.querySelector(cssSelectors.elementImgSelector).addEventListener('click', this.handleCardClick);
 
     //поставим сердечку обработчик клика
     this._element.querySelector(cssSelectors.elementBtnLikeSelector).addEventListener('click', (evt) => {
@@ -85,14 +83,13 @@ export class Card {
     // Так у других элементов появится доступ к ней.
     this._element = this._getTemplate();
 
-    console.log(this._element);
     //Добавим обработчики событий
     this._setEventListeners();
 
     // Добавим данные
     this._element.querySelector(cssSelectors.elementLikeSumSelector).textContent = this._likes;
-    this._element.querySelector(cssSelectors.elementTitle).textContent = this._data.name;
-    const cardImg = this._element.querySelector(cssSelectors.elementImg);
+    this._element.querySelector(cssSelectors.elementTitleSelector).textContent = this._data.name;
+    const cardImg = this._element.querySelector(cssSelectors.elementImgSelector);
 
     cardImg.src = this._data.link;
     cardImg.alt = this._data.name;

@@ -4,7 +4,7 @@
   height: 120px;
   background-size: cover;
   background-position: center;
-  background-image: url(../../../images/profile/avatar-cousteau.jpg);
+  /*background-image: url(../../../images/profile/avatar-cousteau.jpg);*/
   display: flex;
   position: relative;
   z-index: 0;

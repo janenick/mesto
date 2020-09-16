@@ -107,6 +107,8 @@ const elements = {
   // попап профиля
   popupProfileForm,
   saveButton,
+  popupName,
+  popupStatus,
   // попап карточек
   popupNewPlaceForm,
   saveButtonNewPlace
