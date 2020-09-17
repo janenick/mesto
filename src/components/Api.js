@@ -1,4 +1,4 @@
-const handleError = (res) => {
+const _handleError = (res) => {
   if (res.ok) {
     return res.json();
   }
@@ -19,7 +19,7 @@ export default class Api {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers
     })
-      .then(handleError);
+      .then(_handleError);
   }
 
 
@@ -31,7 +31,7 @@ export default class Api {
         data
       )
     })
-      .then(handleError);
+      .then(_handleError);
   }
 
   changeAvatar(data) {
@@ -42,14 +42,14 @@ export default class Api {
         avatar: data.avatar
       })
     })
-      .then(handleError);
+      .then(_handleError);
   }
 
   getCardsFromServer() {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers
     })
-      .then(handleError);
+      .then(_handleError);
   }
 
   addNewCard({ name, link }) {
@@ -61,7 +61,7 @@ export default class Api {
         link: link
       })
     })
-      .then(handleError);
+      .then(_handleError);
   }
 
   removeCard(id) {
@@ -69,7 +69,7 @@ export default class Api {
       method: 'DELETE',
       headers: this._headers
     })
-      .then(handleError);
+      .then(_handleError);
   }
 
   putLike(id) {
@@ -77,7 +77,7 @@ export default class Api {
       method: 'PUT',
       headers: this._headers
     })
-      .then(handleError);
+      .then(_handleError);
   }
 
   deleteLike(id) {
@@ -85,7 +85,7 @@ export default class Api {
       method: 'DELETE',
       headers: this._headers
     })
-      .then(handleError);
+      .then(_handleError);
   }
 
   getAppInfo() {
