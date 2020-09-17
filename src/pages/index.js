@@ -21,7 +21,6 @@ import {
 import { renderLoading, renderError } from '../utils/utils.js';
 import './index.css'; // импорт главного файла стилей
 
-//let myID;
 const avatarFormValidator = new FormValidator(elements.popupAvatarForm, validationParams);
 const editFormValidator = new FormValidator(elements.popupProfileForm, validationParams);
 const newPlaceFormValidator = new FormValidator(elements.popupNewPlaceForm, validationParams);
@@ -99,29 +98,38 @@ function openPopupProfile() {
   infoPopup.openPopup();
 }
 
+
+// функция открытия popup добавления карточки
+function openPopupAdd(popupAdd) {
+  newPlaceFormValidator.toggleButtonStateOnForm();
+  newPlaceFormValidator.resetValidationErrors();
+  popupAdd.openPopup();
+}
+
+
 /*--> Получим информацию, сохраненную на сервере */
 api.getAppInfo().
-  then(([InitialUserInfo, InitialCardList]) => {
+  then(([initialUserInfo, initialCardList]) => {
 
     // внесем инфо о пользователе с сервера
     infoUser.setUserInfo({
-      name: InitialUserInfo.name,
-      info: InitialUserInfo.about,
-      avatar: InitialUserInfo.avatar,
-      userID: InitialUserInfo._id
+      name: initialUserInfo.name,
+      info: initialUserInfo.about,
+      avatar: initialUserInfo.avatar,
+      userID: initialUserInfo._id
     });
 
-    return InitialCardList;
+    return initialCardList;
   })
   /*<-- Получим информацию, сохраненную на сервере*/
-  .then((InitialCardList) => {
+  .then((initialCardList) => {
     // функции работы с карточками
-    const createCard = (result, cardSelector) => {
+    const createCard = (cardData, cardSelector) => {
       const card = new Card({
         myID: infoUser.userID,
-        data: result,
+        data: cardData,
         handleCardClick: () => {
-          imgPopup.openPopup(result);
+          imgPopup.openPopup(cardData);
         },
         handleLikeClick: (evt, id) => {
           api.putLike(id)
@@ -143,9 +151,7 @@ api.getAppInfo().
         handleDeleteClick: (id) => {
           delSubmitPopup.setSubmitAction(() => {
             api.removeCard(id)
-              .then(res => {
-                card.removeCard();
-              })
+              .then(() => card.removeCard())
               .then(() => delSubmitPopup.closePopup())
               .catch((err) => {
                 renderError(`Ошибка: ${err}`);
@@ -160,7 +166,7 @@ api.getAppInfo().
 
 
     const cardList = new Section({
-      items: InitialCardList,
+      items: initialCardList,
       renderer: (item) => {
         const card = createCard(item, cssSelectors.cardTemplateSelector);
         const cardElement = card.generateCard();
@@ -192,22 +198,11 @@ api.getAppInfo().
         }
       }
     );
-    return addCardPopup;
-  })
-  .then((addCardPopup) => {
-    // функция открытия popup добавления карточки
-    function openPopupAdd() {
-      newPlaceFormValidator.toggleButtonStateOnForm();
-      newPlaceFormValidator.resetValidationErrors();
-      addCardPopup.openPopup();
-    }
-
+        
     elements.avatarBox.addEventListener('click', openPopupAvatar);
     elements.editButton.addEventListener('click', openPopupProfile);
-    elements.addButton.addEventListener('click', openPopupAdd);
-    return addCardPopup;
-  })
-  .then((addCardPopup) => {
+    elements.addButton.addEventListener('click', () => { openPopupAdd(addCardPopup) });
+    
     delSubmitPopup.setEventListeners();
     imgPopup.setEventListeners();
     avatarPopup.setEventListeners();
@@ -215,7 +210,7 @@ api.getAppInfo().
     addCardPopup.setEventListeners();
 
   })
-  .then(() => {
+  .finally(() => {
     avatarFormValidator.enableValidation();
     editFormValidator.enableValidation();
     newPlaceFormValidator.enableValidation();
