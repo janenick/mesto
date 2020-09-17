@@ -1,7 +1,7 @@
-import { cssClasses } from './constants.js';
+import { popupModifiers } from './constants.js';
 
 export const isPopupOpened = (currentPopup) => {
-  return currentPopup.classList.contains(cssClasses.popupVisibleClass);
+  return currentPopup.classList.contains(popupModifiers.popupVisibleClass);
 }
 
 

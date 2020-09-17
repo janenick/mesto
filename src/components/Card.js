@@ -1,4 +1,4 @@
-import { cssClasses, cssSelectors } from '../utils/constants.js';
+import { btnSelectors, cssSelectors } from '../utils/constants.js';
 
 export class Card {
   constructor({ myID, ...cardData }, cardSelector) {
@@ -26,28 +26,28 @@ export class Card {
     this._element.querySelector(cssSelectors.elementImgSelector).addEventListener('click', this.handleCardClick);
 
     //поставим сердечку обработчик клика
-    this._element.querySelector(cssSelectors.elementBtnLikeSelector).addEventListener('click', (evt) => {
+    this._element.querySelector(btnSelectors.BtnLikeSelector).addEventListener('click', (evt) => {
       this._isLiked ? this.handleDislikeClick(evt, this._data._id) : this.handleLikeClick(evt, this._data._id);
     });
 
     // добавим "корзину"
-    this._element.querySelector(cssSelectors.elementBtnTrashSelector).addEventListener('click', () => {
+    this._element.querySelector(btnSelectors.BtnTrashSelector).addEventListener('click', () => {
       this.handleDeleteClick(this._data._id);
     });
   }
 
 
   _renderLikes() {
-    this._element.querySelector(cssSelectors.elementLikeSumSelector).textContent = this._likes;
+    this._element.querySelector(btnSelectors.LikeSumSelector).textContent = this._likes;
   }
 
 
   _renderLikesBtn() {
     if (this._isLiked) {
-      this._element.querySelector(cssSelectors.elementBtnLikeSelector).classList.add(cssClasses.elementBtnLikeActiveClass);
+      this._element.querySelector(btnSelectors.BtnLikeSelector).classList.add(btnSelectors.BtnLikeActiveClass);
     }
     else {
-      this._element.querySelector(cssSelectors.elementBtnLikeSelector).classList.remove(cssClasses.elementBtnLikeActiveClass);
+      this._element.querySelector(btnSelectors.BtnLikeSelector).classList.remove(btnSelectors.BtnLikeActiveClass);
     };
   }
 
@@ -72,7 +72,7 @@ export class Card {
 
   _correctBtnDelete(userID, ownerID) {
     if (userID === ownerID) {
-      this._element.querySelector(cssSelectors.elementBtnTrashSelector).classList.add(cssClasses.elementBtnTrashActiveClass);
+      this._element.querySelector(btnSelectors.BtnTrashSelector).classList.add(btnSelectors.BtnTrashActiveClass);
     }
   }
 
@@ -86,7 +86,7 @@ export class Card {
     this._setEventListeners();
 
     // Добавим данные
-    this._element.querySelector(cssSelectors.elementLikeSumSelector).textContent = this._likes;
+    this._element.querySelector(btnSelectors.LikeSumSelector).textContent = this._likes;
     this._element.querySelector(cssSelectors.elementTitleSelector).textContent = this._data.name;
     const cardImg = this._element.querySelector(cssSelectors.elementImgSelector);
 

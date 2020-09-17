@@ -9,6 +9,7 @@ import Api from '../components/Api.js';
 import PopupConfirm from '../components/PopupConfirm.js';
 
 import {
+  popupModifiers,
   cssSelectors,
   elements,
   inputNames,
@@ -33,9 +34,9 @@ const api = new Api({
   }
 });
 
-const delSubmitPopup = new PopupConfirm(cssSelectors.popupDelSubmitSelector);
+const delSubmitPopup = new PopupConfirm(popupModifiers.popupDelSubmitSelector);
 
-const imgPopup = new PopupWithImage(cssSelectors.popupBigImgSelector);
+const imgPopup = new PopupWithImage(popupModifiers.popupBigImgSelector);
 
 const infoUser = new UserInfo({
   nameSelector: cssSelectors.profileNameSelector,
@@ -43,7 +44,7 @@ const infoUser = new UserInfo({
   avatarSelector: cssSelectors.profileAvatarSelector
 });
 
-const infoPopup = new PopupWithForm(cssSelectors.popupProfileSelector,
+const infoPopup = new PopupWithForm(popupModifiers.popupProfileSelector,
   {
     handleFormSubmit: (values) => {
       renderLoading(true, elements.saveButton, 'Сохранение...');
@@ -63,7 +64,7 @@ const infoPopup = new PopupWithForm(cssSelectors.popupProfileSelector,
 );
 
 
-const avatarPopup = new PopupWithForm(cssSelectors.popupAvatarSelector,
+const avatarPopup = new PopupWithForm(popupModifiers.popupAvatarSelector,
   {
     handleFormSubmit: (values) => {
       renderLoading(true, elements.saveButtonAvatar, 'Сохранение...');
@@ -180,7 +181,7 @@ api.getAppInfo().
   })
   .then((cardList) => {
     const addCardPopup = new PopupWithForm(
-      cssSelectors.popupNewPlaceSelector,
+      popupModifiers.popupNewPlaceSelector,
       {
         handleFormSubmit: (values) => {
           renderLoading(true, elements.saveButtonNewPlace, 'Сохранение...');
@@ -198,11 +199,11 @@ api.getAppInfo().
         }
       }
     );
-        
+
     elements.avatarBox.addEventListener('click', openPopupAvatar);
     elements.editButton.addEventListener('click', openPopupProfile);
     elements.addButton.addEventListener('click', () => { openPopupAdd(addCardPopup) });
-    
+
     delSubmitPopup.setEventListeners();
     imgPopup.setEventListeners();
     avatarPopup.setEventListeners();
