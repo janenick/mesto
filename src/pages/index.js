@@ -186,9 +186,7 @@ api.getAppInfo().
         handleFormSubmit: (values) => {
           renderLoading(true, elements.saveButtonNewPlace, 'Сохранение...');
           api.addNewCard({ name: values[inputNames.profileNewPlaseNameInput], link: values[inputNames.profileNewPlaseImgInput] })
-            .then(result => {
-              cardRenderer(result)
-            })
+            .then(cardRenderer)
             .then(() => addCardPopup.closePopup())
             .catch((err) => {
               renderError(`Ошибка: ${err}`);
