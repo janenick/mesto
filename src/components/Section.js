@@ -19,9 +19,4 @@ export default class Section {
       this._renderer(item);
     });
   }
-
-  // данная функция используется в handleFormSubmit попапа добавления карточки
-  renderItem(item) {
-    this._renderer(item);
-  }
 }

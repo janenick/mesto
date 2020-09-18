@@ -168,12 +168,15 @@ api.getAppInfo().
 
     const cardList = new Section({
       items: initialCardList,
-      renderer: (item) => {
-        const card = createCard(item, cssSelectors.cardTemplateSelector);
-        const cardElement = card.generateCard();
-        cardList.addItem(cardElement);
-      }
+      renderer: cardRenderer
     }, cssSelectors.cardListSelector);
+
+
+    function cardRenderer(cardData) {
+      const card = createCard(cardData, cssSelectors.cardTemplateSelector);
+      const cardElement = card.generateCard();
+      cardList.addItem(cardElement);
+    }
 
     cardList.renderItems();
 
@@ -183,8 +186,8 @@ api.getAppInfo().
         handleFormSubmit: (values) => {
           renderLoading(true, elements.saveButtonNewPlace, 'Сохранение...');
           api.addNewCard({ name: values[inputNames.profileNewPlaseNameInput], link: values[inputNames.profileNewPlaseImgInput] })
-            .then((result) => {
-              cardList.renderItem(result);
+            .then(result => {
+              cardRenderer(result)
             })
             .then(() => addCardPopup.closePopup())
             .catch((err) => {
