@@ -176,10 +176,7 @@ api.getAppInfo().
     }, cssSelectors.cardListSelector);
 
     cardList.renderItems();
-    return cardList;
 
-  })
-  .then((cardList) => {
     const addCardPopup = new PopupWithForm(
       popupModifiers.popupNewPlaceSelector,
       {
@@ -211,11 +208,11 @@ api.getAppInfo().
     addCardPopup.setEventListeners();
 
   })
+  .catch((err) => {
+    renderError(`Не удалось загрузить информацию с сервера. Ошибка: ${err}`);
+  })
   .finally(() => {
     avatarFormValidator.enableValidation();
     editFormValidator.enableValidation();
     newPlaceFormValidator.enableValidation();
-  })
-  .catch((err) => {
-    renderError(`Не удалось загрузить информацию с сервера. Ошибка: ${err}`);
   });
